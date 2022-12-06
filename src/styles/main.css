@@ -1,0 +1,116 @@
+.main {
+    overflow: hidden;
+    color: white;
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    background: url(../../pictures/bg-forest.jpg) no-repeat center;
+    background-size: cover;
+    align-items: center;
+    justify-content: center;
+}
+
+.main__scene {
+    display: flex;
+    width: 1000px;
+    height: 660px;
+    background: #90B6B3;
+    opacity: .8;
+    flex-direction: column;
+    border-radius: 25px 25px 25px 25px;
+}
+
+.--button {
+    padding: 10px 10px 10px 10px;
+    background: rgba(255, 255, 255, 0.15);
+    background-blend-mode: hard-light;
+    box-shadow: 0px 17px 18px #28664e;
+    border-radius: 25px 25px 25px 25px;
+}
+
+
+/* title of scene */
+
+.scene__title {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.title__head {
+    padding: 105px 0px 0px 220px;
+    margin: 0;
+}
+
+.head--baner {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 41px;
+    margin: 0;
+}
+
+.head--span {
+    font-weight: 400;
+    font-size: 13px;
+}
+
+.title__button {
+    margin: 0px 220px 20px 0px;
+}
+
+
+/* countdown */
+
+.scene__countdown {
+    width: 500px;
+    height: 165px;
+    padding: 0px 250px 0px 250px;
+    margin-top: 94px;
+}
+
+.countdown__timer {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+}
+
+.timer__block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.timer__number {
+    padding: 25px 33px 22px 33px;
+    margin: 0px 13px;
+    font-weight: 700;
+    font-size: 48px;
+    background: rgba(255, 255, 255, 0.15);
+    background-blend-mode: hard-light;
+    box-shadow: 0px 17px 18px #28664E;
+}
+
+.--left {
+    border-radius: 25px 0px 0px 25px;
+}
+
+.--right {
+    border-radius: 0px 25px 25px 0px;
+}
+
+.timer__text {
+    font-weight: 400;
+    font-size: 21px;
+}
+
+
+/* note */
+
+.scene__note {
+    padding: 10px 0px 0px 220px;
+    width: 555px;
+    font-weight: 400;
+    text-align: justify;
+}
