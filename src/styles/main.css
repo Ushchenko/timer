@@ -74,6 +74,7 @@
     padding: 0;
     display: flex;
     justify-content: space-around;
+    gap: 26px;
 }
 
 .timer__block {
@@ -84,7 +85,6 @@
 
 .timer__number {
     padding: 25px 33px 22px 33px;
-    margin: 0px 13px;
     font-weight: 700;
     font-size: 48px;
     background: rgba(255, 255, 255, 0.15);
@@ -101,8 +101,9 @@
 }
 
 .timer__text {
-    font-weight: 400;
+    font-weight: 700;
     font-size: 21px;
+    padding: 12px;
 }
 
 

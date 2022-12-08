@@ -1,5 +1,7 @@
 import '../styles/main.css';
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
+import Calendar from './Calendar';
+
 export default MainSection;
 
 
@@ -18,7 +20,8 @@ let text = {
 			'a nec urna, lobortis sed. Feugiat fermentum mauris vel',
 			'ultricies, lorem morbi mauris. Taciti hendrerit lacus,',
 			'duis sit ultrices, vel sem eget blandit ac, risus sociosqu ut',
-			'fusce wisi per, iaculis nec fermentum lectus et et.'],
+		'fusce wisi per, iaculis nec fermentum lectus et et.'
+	],
 }
 
 
@@ -106,14 +109,14 @@ function MainSection() {
 
 	return (
 		<section className="main">
+			<Calendar></Calendar>
 			<section className='main__scene'>
-
 				<section className='scene__title'>
 					<section className='title__head'>
 						<h1 className='head--baner'>{text.title}</h1>
 						<span className='head--span'>{curDayName}, {curDay} {curMonth} {curYear}</span>
 					</section>
-					<section className='title__button --button'>Set end date</section>
+					{/* <section className='title__button --button'>Set end date</section> */}
 				</section>
 					
 				<section className='scene__countdown'>
