@@ -89,5 +89,13 @@ function Calendar() {
 			</div>
 			<div className='bluredBg'></div>
 		</section>
+		
 	)
+}
+
+class CalendarDays extends React.Component {
+	constructor() {
+		super(this.props) 
+		
+	}
 }
