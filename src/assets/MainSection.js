@@ -1,12 +1,13 @@
 import '../styles/main.css';
 import { useState, useEffect } from 'react';
 import Calendar from './Calendar';
+import BruledSCene from './BluredScene';
 
 export default MainSection;
 
 
 let curDate = new Date();
-let endDate = new Date('2022.12.12');
+let endDate = new Date('2022.12.08 13:30');
 
 let curDayName = curDate.toLocaleDateString('en-us', { weekday: 'long' });
 let curDay = curDate.getDate();
@@ -28,33 +29,40 @@ let text = {
 
 function MainSection() {
 	const [seconds, setSeconds] = useState((seconds) => {
+		if (endDate - curDate < 0) return seconds = `00`
 		if (Math.floor((endDate - curDate) / 1000 % 60) < 10)
 			return seconds = `0${Math.floor((endDate - curDate) / 1000 % 60)}`
 		else return seconds = `${Math.floor((endDate - curDate) / 1000 % 60)}`
 	});
 
 	const [minutes, setMinutes] = useState((minutes) => {
-			if (Math.floor((endDate - curDate) / 1000 / 60 % 60) < 10)
-				return minutes = `0${Math.floor((endDate - curDate) / 1000 / 60 % 60)}`
-			else return minutes = `${Math.floor((endDate - curDate) / 1000 / 60 % 60)}`
+		if(endDate - curDate < 0) return minutes = `00`
+		if (Math.floor((endDate - curDate) / 1000 / 60 % 60) < 10)
+			return minutes = `0${Math.floor((endDate - curDate) / 1000 / 60 % 60)}`
+		else return minutes = `${Math.floor((endDate - curDate) / 1000 / 60 % 60)}`
 	});
 	
 	const [hours, setHours] = useState((hours) => {
+		if (endDate - curDate < 0) return hours = `00`
 		if (Math.floor((endDate - curDate) / 1000 / 3600 % 60) < 10)
 			return hours = `0${Math.floor((endDate - curDate) / 1000 / 3600 % 60)}`
 		else return hours = `${Math.floor((endDate - curDate) / 1000 / 3600 % 60)}`
 	});
 
 	const [days, setDays] = useState((days) => {
+		if (endDate - curDate < 0) return days = `00`
 		if (Math.floor((endDate - curDate) / 1000 / 3600 / 24 % 60) < 10)
 			return days = `0${Math.floor((endDate - curDate) / 1000 / 3600 / 24 % 60) }`
 		else return days = `${Math.floor((endDate - curDate) / 1000 / 3600 / 24 % 60) }`
 	})
 
+	const [isShownCalendar, setIsShownCalendar] = useState(false);
+
 	useEffect(() => {
 		const interval = setInterval(() => {
 			curDate = new Date();
 			setSeconds((prevSeconds) => {
+				if (endDate - curDate < 0) return prevSeconds = `00`
 				if (Math.floor((endDate - curDate) / 1000 % 60) < 10)
 					return prevSeconds = `0${Math.floor((endDate - curDate) / 1000 % 60)}`
 				else return prevSeconds = `${Math.floor((endDate - curDate) / 1000 % 60)}`
@@ -72,6 +80,7 @@ function MainSection() {
 		const interval = setInterval(() => {
 			curDate = new Date();
 			setMinutes((prevMinutes) => {
+				if (endDate - curDate < 0) return prevMinutes = `00`
 				if (Math.floor((endDate - curDate) / 1000 / 60 % 60) < 10)
 					return prevMinutes = `0${Math.floor((endDate - curDate) / 1000 / 60 % 60)}`
 				else return prevMinutes = `${Math.floor((endDate - curDate) / 1000 / 60 % 60)}`
@@ -85,6 +94,7 @@ function MainSection() {
 		const interval = setInterval(() => {
 			curDate = new Date();
 			setHours((prevHours) => {
+				if (endDate - curDate < 0) return prevHours = `00`
 				if (Math.floor((endDate - curDate) / 1000 / 3600 % 60) < 10)
 					return prevHours = `0${Math.floor((endDate - curDate) / 1000 / 3600 % 60)}`
 				else return prevHours = `${Math.floor((endDate - curDate) / 1000 / 3600 % 60)}`
@@ -98,6 +108,7 @@ function MainSection() {
 		const interval = setInterval(() => {
 			curDate = new Date();
 			setDays((prevDays) => {
+				if (endDate - curDate < 0) return prevDays = `00`
 				if (Math.floor((endDate - curDate) / 1000 / 3600 / 24 % 60) < 10)
 					return prevDays = `0${Math.floor((endDate - curDate) / 1000 / 3600 / 24 % 60)}`
 				else return prevDays = `${Math.floor((endDate - curDate) / 1000 / 3600 / 24 % 60)}`
@@ -109,14 +120,13 @@ function MainSection() {
 
 	return (
 		<section className="main">
-			<Calendar></Calendar>
+			{isShownCalendar && <Calendar/>}
 			<section className='main__scene'>
 				<section className='scene__title'>
 					<section className='title__head'>
 						<h1 className='head--baner'>{text.title}</h1>
 						<span className='head--span'>{curDayName}, {curDay} {curMonth} {curYear}</span>
 					</section>
-					{/* <section className='title__button --button'>Set end date</section> */}
 				</section>
 					
 				<section className='scene__countdown'>
@@ -145,6 +155,12 @@ function MainSection() {
 				</section>
 				
 			</section>
+			<button className='title__button --button' onClick={(e) => {
+				setIsShownCalendar((isShown) => !isShown);
+			}}>
+				Set end date
+			</button>
+			{isShownCalendar && <BruledSCene/>}
 		</section>
 	)
 }

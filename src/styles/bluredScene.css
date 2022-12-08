@@ -1,0 +1,8 @@
+#bluredScene {
+    width: 100vw;
+    height: 100vh;
+    background: #000;
+    position: absolute;
+    opacity: 0.4;
+    z-index: 0;
+}
