@@ -27,7 +27,6 @@ button:hover {
     width: 596.8px;
     height: 500px;
     box-sizing: border-box;
-    border: 1px solid;
 }
 
 .calendar__scene {
@@ -52,6 +51,7 @@ button:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 3em;
 }
 
 .scene__weekdays li {
@@ -76,8 +76,29 @@ button:hover {
 
 .days {
     display: grid;
-    padding-top: 30px;
+    font-weight: 900;
+    /* padding-top: 10px; */
     grid-template-columns: repeat(7, 1fr);
     grid-auto-rows: 47px;
     text-align: center;
+    align-items: center;
+}
+
+.days--number--prev {
+    color: rgb(57 57 57 / 40%);
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.days--number {
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
 }
