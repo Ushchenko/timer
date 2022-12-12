@@ -93,23 +93,40 @@ function Calendar() {
 function Days(year, month) {
 
 	const calendarDays = {
-		tag: []
-	};
-	let
-	 	daysAmount = new Date(year, month + 1, 0).getDate(),
-		daysPrefix = new Date(year, month, 0).getDay(),
-		prevMonthsDaysAmount = new Date(year, month, 0).getDate(),
-		prevMonthsPostfix = new Date(year, month + 1, 0).getDay();
+		tag: [],
+		fullDays: [
+			1, 2, 3, 4, 5, 6, 7,
+			1, 2, 3, 4, 5, 6, 7,
+			1, 2, 3, 4, 5, 6, 7,
+			1, 2, 3, 4, 5, 6, 7,
+			1, 2, 3, 4, 5, 6, 7,
+			1, 2, 3, 4, 5, 6, 7,
+			1, 2, 3, 4, 5, 6, 7,
+		],
+		daysAmount: new Date(year, month + 1, 0).getDate(),
+		daysPrefix: new Date(year, month, 0).getDay(),
+		prevMonthsDaysAmount: new Date(year, month, 0).getDate(),
+	}
+	 	
 		
 
-	if(daysPrefix > 0) 
-		for(let i = 1, j = prevMonthsDaysAmount - daysPrefix + 1; i <= daysPrefix; i++, j++) 
+	if (calendarDays.daysPrefix > 0) 
+		for (let i = 1, j = calendarDays.prevMonthsDaysAmount - calendarDays.daysPrefix + 1; i <= calendarDays.daysPrefix; i++, j++) 
 			calendarDays.tag.push(<li className='days--number--prev'>{j}</li>)
 		
 
-	for(let i = 1; i <= daysAmount; i++)
+	for (let i = 1; i <= calendarDays.daysAmount; i++)
 		calendarDays.tag.push(<li className='days--number'>{i}</li>)
+	
+	if (calendarDays.tag.length < calendarDays.fullDays.length) {
+		for (let i = 1; calendarDays.tag.length <= calendarDays.fullDays.length; i++) {
+			calendarDays.tag.push(<li className='days--number--prev'>{i}</li>)
+		}
+	}
 
+	if (month === nowMonth && year === nowYear) {
+		calendarDays.tag.splice(calendarDays.daysPrefix + nowDate.getDate() - 1, 1, <li className='days--number--cur'>{nowDate.getDate()}</li>)
+	}
 	
 	return (
 		calendarDays.tag
