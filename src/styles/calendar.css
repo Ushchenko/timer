@@ -42,6 +42,7 @@ button:hover {
     background: #99BDBF;
     padding: 3em 0em;
     width: 100%;
+    height: 0px;
     justify-content: space-evenly;
     align-items: center;
 }
@@ -84,16 +85,6 @@ button:hover {
     align-items: center;
 }
 
-.days--number--prev {
-    color: rgb(57 57 57 / 30%);
-    width: 100%;
-    height: 100%;
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    box-sizing: border-box;
-}
-
 .days--number {
     width: 100%;
     height: 100%;
@@ -103,6 +94,11 @@ button:hover {
     box-sizing: border-box;
 }
 
-.days--number--cur {
-    color: rgba(218, 84, 106, 0.801);
+.--prev, .--next {
+    color: rgb(57 57 57 / 30%);
+}
+
+.--cur {
+    color: rgb(19 63 100);
+    border: 1px;
 }

@@ -6,13 +6,13 @@ import BruledSCene from './BluredScene';
 export default MainSection;
 
 
-let curDate = new Date();
-let endDate = new Date('2022.12.12 13:30');
+let curDate = new Date(),
+	endDate = new Date('2022.12.12 13:30'),
 
-let curDayName = curDate.toLocaleDateString('en-us', { weekday: 'long' });
-let curDay = curDate.getDate();
-let curMonth = curDate.toLocaleString('en-us', { month: 'long' });
-let curYear = curDate.getFullYear();
+	curDayName = curDate.toLocaleDateString('en-us', { weekday: 'long' }),
+	curDay = curDate.getDate(),
+	curMonth = curDate.toLocaleString('en-us', { month: 'long' }),
+	curYear = curDate.getFullYear();
 
 let text = {
 	title: ['Trip to UK'],
@@ -21,7 +21,7 @@ let text = {
 			'a nec urna, lobortis sed. Feugiat fermentum mauris vel',
 			'ultricies, lorem morbi mauris. Taciti hendrerit lacus,',
 			'duis sit ultrices, vel sem eget blandit ac, risus sociosqu ut',
-		'fusce wisi per, iaculis nec fermentum lectus et et.'
+			'fusce wisi per, iaculis nec fermentum lectus et et.'
 	],
 }
 

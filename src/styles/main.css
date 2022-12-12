@@ -44,6 +44,18 @@ ul {
     z-index: 100;
 }
 
+@media screen and (max-width: 1200px) {
+    .main__scene {
+        scale: .7;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .--button {
+        scale: 1.1;
+    }
+}
+
 
 /* title of scene */
 

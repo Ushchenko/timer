@@ -9,13 +9,15 @@ const nowDate = new Date();
 let nowYear = nowDate.getFullYear(),
 	nowMonth = nowDate.getMonth();
 
+const monthName = ["January", "February", "March",
+	"April", "May", "June", "July",
+	"August", "September", "October",
+	"November", "December"
+];
+
 
 function Calendar() {
-	const monthName = ["January", "February", "March",
-			"April", "May", "June", "July",
-			"August", "September", "October",
-			"November", "December"
-		];
+	
 	
 	let [nowMonthName, setMonthName] = useState(monthName[nowDate.getMonth()]),
 		[nowYearName, setYearName] = useState(nowDate.getFullYear());
@@ -27,7 +29,7 @@ function Calendar() {
 	function handleNowYearName(newNowYearName) {
 		setYearName(newNowYearName)
 	}
-
+	
 	return (
 		<section id="calendar">
 			<div className='calendar__scene'>
@@ -92,6 +94,10 @@ function Calendar() {
 
 function Days(year, month) {
 
+	function handleEvent() {
+		console.log(1);
+	}
+
 	const calendarDays = {
 		tag: [],
 		fullDays: [
@@ -100,8 +106,7 @@ function Days(year, month) {
 			1, 2, 3, 4, 5, 6, 7,
 			1, 2, 3, 4, 5, 6, 7,
 			1, 2, 3, 4, 5, 6, 7,
-			1, 2, 3, 4, 5, 6, 7,
-			1, 2, 3, 4, 5, 6, 7,
+			1, 2, 3, 4, 5, 6,
 		],
 		daysAmount: new Date(year, month + 1, 0).getDate(),
 		daysPrefix: new Date(year, month, 0).getDay(),
@@ -112,20 +117,35 @@ function Days(year, month) {
 
 	if (calendarDays.daysPrefix > 0) 
 		for (let i = 1, j = calendarDays.prevMonthsDaysAmount - calendarDays.daysPrefix + 1; i <= calendarDays.daysPrefix; i++, j++) 
-			calendarDays.tag.push(<li className='days--number--prev'>{j}</li>)
+			calendarDays.tag.push(
+				<li className='days--number --prev'
+					onClick={handleEvent}
+				>{j}</li>
+			)
 		
 
 	for (let i = 1; i <= calendarDays.daysAmount; i++)
-		calendarDays.tag.push(<li className='days--number'>{i}</li>)
+		calendarDays.tag.push(
+			<li className='days--number'
+				onClick={handleEvent}
+			>{i}</li>
+		)
 	
 	if (calendarDays.tag.length < calendarDays.fullDays.length) {
 		for (let i = 1; calendarDays.tag.length <= calendarDays.fullDays.length; i++) {
-			calendarDays.tag.push(<li className='days--number--prev'>{i}</li>)
+			calendarDays.tag.push(
+				<li className='days--number --next'
+					onClick={handleEvent}
+				>{i}</li>
+			)
 		}
 	}
 
-	if (month === nowMonth && year === nowYear) {
-		calendarDays.tag.splice(calendarDays.daysPrefix + nowDate.getDate() - 1, 1, <li className='days--number--cur'>{nowDate.getDate()}</li>)
+	if (year === new Date().getFullYear() && month === new Date().getMonth()) {
+		calendarDays.tag.splice(
+			calendarDays.daysPrefix + nowDate.getDate() - 1, 1,
+			<li className='days--number --cur'>{nowDate.getDate()}</li>
+		)
 	}
 	
 	return (
