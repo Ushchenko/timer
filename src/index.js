@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { createContext } from 'react';
 import ReactDOM from 'react-dom/client';
 import './styles/index.css';
 import reportWebVitals from './reportWebVitals';
-import MainSection from './assets/MainSection';
+import MainSection from './Pages/MainSection';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root'))
+
 root.render(
   <React.StrictMode>
-    <MainSection/>
+      <MainSection />
   </React.StrictMode>
 );
 

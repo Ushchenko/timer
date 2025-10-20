@@ -1,9 +1,9 @@
 import '../styles/bluredScene.css';
 
-export default BruledSCene;
+export default BruledScene;
 
 
-function BruledSCene() {
+function BruledScene() {
 	return (
 		<div id="bluredScene"></div>
 	)
