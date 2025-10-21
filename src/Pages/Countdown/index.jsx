@@ -1,17 +1,9 @@
-import '../styles/main.css';
-import { useState, useEffect, createContext } from 'react';
-import Calendar from "../Components/Calendar"
-import * as CountdownFunctions from "../Utils/CountdownState"
-import BruledScene from '../Components/BluredScene';
+import "./Countdown.css"
+import { useState, useEffect, createContext } from 'react'
+import { Calendar } from "../../Components/Calendar/index"
+import { calculateCountdownInterval } from "../../Utils/CountdownState"
 
-export default MainSection;
-
-
-let curDate = new Date(),
-  curDayName = curDate.toLocaleDateString('en-us', { weekday: 'long' }),
-  curDay = curDate.getDate(),
-  curMonth = curDate.toLocaleString('en-us', { month: 'long' }),
-  curYear = curDate.getFullYear()
+export const CalendarContext = createContext(null)
 
 let text = {
   title: ['Trip to UK'],
@@ -24,57 +16,71 @@ let text = {
   ],
 }
 
-export const EndDateContext = createContext(null)
 
-function MainSection() {
-  const [isShownCalendar, setIsShownCalendar] = useState(false)
+export const Countdown = () => {
+  //states
+  const [isCalendarShown, setIsCalendarShown] = useState(false)
   const [curDate, setCurDate] = useState(new Date())
   const [endDate, setEndDate] = useState(() => {
     const saved = localStorage.getItem("endDate");
     return saved ? new Date(saved) : null;
-  })  
+  })
   const [timeLeft, setTimeLeft] = useState({
     days: '00',
     hours: '00',
     minutes: '00',
     seconds: '00',
   })
-  
+
+  let
+    curDayName = curDate.toLocaleDateString('en-us', { weekday: 'long' }),
+    curDay = curDate.getDate(),
+    curMonth = curDate.toLocaleString('en-us', { month: 'long' }),
+    curYear = curDate.getFullYear(),
+    
+    endDayName = endDate.toLocaleDateString('en-us', { weekday: 'long' }),
+    endDay = endDate.getDate(),
+    endDayMonth = endDate.toLocaleString('en-us', { month: 'long' }),
+    endDateYear = endDate.getFullYear()
+
+  //callbacks
   const getEndDate = (_endDate) => {
-    console.log(_endDate)
     setEndDate(new Date(_endDate))
   }
-  
-  useEffect(() => {
+
+  const getCalendarIsShown = (_isShownCalendar) => {
+    setIsCalendarShown(_isShownCalendar)
+  }
+
+  //effects
+  useEffect(() => {// local storage
     if (endDate) localStorage.setItem("endDate", endDate.toISOString());
-  }, [endDate]);
+  }, [endDate])
 
   useEffect(() => {
-    if (!endDate) return;
+    if (!endDate) return
 
     const interval = setInterval(() => {
-      const now = new Date();
-      setCurDate(now);
-      setTimeLeft(CountdownFunctions.calculateCountdownInterval(endDate, now));
+      const now = new Date()
+      setCurDate(now)
+      setTimeLeft(calculateCountdownInterval(endDate, now))
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [endDate]);
+  }, [endDate])
 
   return (
 
     <section className="main">
-      <EndDateContext.Provider value={{ getEndDate }}>
-        {isShownCalendar && <Calendar isShown={isShownCalendar} getEndDate={getEndDate} />}
-      </EndDateContext.Provider>
       <section className='main__scene'>
         <section className='scene__title'>
           <section className='title__head'>
             <h1 className='head--baner'>{text.title}</h1>
-            <span className='head--span'>{curDayName}, {curDay} {curMonth} {curYear}</span>
+            <span className='head--span'>
+              {curDayName}, {curDay} {curMonth} {curYear} - {endDayName}, {endDay} {endDayMonth} {endDateYear}
+            </span>
           </section>
         </section>
-
         <section className='scene__countdown'>
           <ul className='countdown__timer'>
             <li className='timer__block'>
@@ -102,11 +108,18 @@ function MainSection() {
 
       </section>
       <button className='title__button --button' onClick={(e) => {
-        setIsShownCalendar((isShown) => !isShown);
+        setIsCalendarShown((isShown) => !isShown);
       }}>
         Set end date
       </button>
-      {isShownCalendar && <BruledScene />}
+      <CalendarContext.Provider value={{ getEndDate, getCalendarIsShown }}>
+        {isCalendarShown &&
+          <>
+            <Calendar isShown={isCalendarShown} getEndDate={getEndDate} />
+            <div id="bluredScene"></div>
+          </>
+        }
+      </CalendarContext.Provider>
     </section>
   )
 }
