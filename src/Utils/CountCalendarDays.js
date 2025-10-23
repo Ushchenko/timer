@@ -1,10 +1,12 @@
+import "../Components/Calendar/Calendar.css"
 import { useContext } from "react";
-import { EndDateContext } from "../Pages/MainSection"
+import { CalendarContext } from "../Pages/Countdown"
 
-const CountCalendarDays = (monthName, nowDate, year, month) => {
-  const { getEndDate } = useContext(EndDateContext)
+export const CountCalendarDays = ({ nowDate, year, month }) => {
+  const { getEndDate, getCalendarIsShown } = useContext(CalendarContext)
 
-  function handleEvent(day, e) {
+  //functions
+  const selectDay = (day, e) => {
     let selectedYear = year;
     let selectedMonth = month;
     if (e.currentTarget.className.includes("--prev")) {
@@ -21,67 +23,57 @@ const CountCalendarDays = (monthName, nowDate, year, month) => {
         selectedYear += 1;
       }
     }
-    console.log(selectedYear, monthName[selectedMonth], day);
     getEndDate(`${selectedYear} ${selectedMonth + 1} ${day}`)
+    getCalendarIsShown(false)
+  }
+
+  const createListItem = ({ type, day }) => {
+    const isCurrentDay =
+      day === nowDate.getDate() &&
+      year === new Date().getFullYear() &&
+      month === new Date().getMonth()
+
+    return (
+      <li
+        key={`${type}-${day}`}
+        className={`days--number ${isCurrentDay ? "--cur" : `${type}`}`}
+        onClick={(e) => selectDay(day, e)}
+      >
+        {day}
+      </li>
+    )
   }
 
   const calendarDays = {
-    tag: [],
-    fullDays: [
-      1, 2, 3, 4, 5, 6, 7,
-      1, 2, 3, 4, 5, 6, 7,
-      1, 2, 3, 4, 5, 6, 7,
-      1, 2, 3, 4, 5, 6, 7,
-      1, 2, 3, 4, 5, 6, 7,
-      1, 2, 3, 4, 5, 6,
-    ],
+    days: [],
     daysAmount: new Date(year, month + 1, 0).getDate(),
     daysPrefix: new Date(year, month, 0).getDay(),
     prevMonthsDaysAmount: new Date(year, month, 0).getDate(),
   }
 
-  if (calendarDays.daysPrefix > 0)
-    for (let i = 1, j = calendarDays.prevMonthsDaysAmount - calendarDays.daysPrefix + 1; i <= calendarDays.daysPrefix; i++, j++)
-      calendarDays.tag.push(
-        <li
-          className='days--number --prev'
-          onClick={(e) => handleEvent(j, e)}
-          key={j + i + 1}
-        > {j}</li >
-      )
+  for (let i = calendarDays.daysPrefix; i > 0; i--)
+    calendarDays.days.push({ type: "--prev", day: calendarDays.prevMonthsDaysAmount - i + 1 })
 
   for (let i = 1; i <= calendarDays.daysAmount; i++)
-    calendarDays.tag.push(
-      <li
-        className='days--number'
-        onClick={(e) => handleEvent(i, e)}
-        key={i - 1}
-      >{i}</li>
-    )
+    calendarDays.days.push({ type: "", day: i })
 
-  if (calendarDays.tag.length < calendarDays.fullDays.length) {
-    for (let i = 1; calendarDays.tag.length <= calendarDays.fullDays.length; i++) {
-      calendarDays.tag.push(
-        <li className='days--number --next'
-          onClick={(e) => handleEvent(i, e)}
-          key={i + calendarDays.tag.length}
-        >{i}</li>
-      )
-    }
-  }
+  while (calendarDays.days.length < 42)
+    calendarDays.days.push({ type: "--next", day: calendarDays.days.length - (calendarDays.daysPrefix + calendarDays.daysAmount) + 1 })
 
-  if (year === new Date().getFullYear() && month === new Date().getMonth()) {
-    calendarDays.tag.splice(
-      calendarDays.daysPrefix + nowDate.getDate() - 1, 1,
+  return calendarDays.days.map(({ type, day }) => {
+    const isCurrentDay =
+      day === nowDate.getDate() &&
+      year === new Date().getFullYear() &&
+      month === new Date().getMonth()
+
+    return (
       <li
-        className='days--number --cur'
-        onClick={(e) => handleEvent(nowDate.getDate(), e)}
+        key={`${year}-${month}-${type}-${day}`}
+        className={`days--number ${isCurrentDay ? "--cur" : type}`}
+        onClick={(e) => selectDay(day, e, type)}
       >
-        {nowDate.getDate()}</li>
-    )
-  }
-
-  return calendarDays.tag
+        {day}
+      </li>
+    );
+  });
 }
-
-export default CountCalendarDays
