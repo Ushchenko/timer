@@ -1,10 +1,22 @@
+import { useEffect, useRef, useState } from 'react';
 import './Home.css'
-import { Link } from 'react-router-dom'
+import { Header } from '../../Components/Header';
+import { Intro } from '../../Components/Intro';
+import { TaskLayer } from '../../Components/TaskLayer';
+
 
 export const Home = () => {
+  const [animate, setAnimate] = useState(false)
+
   return (
     <>
-      <Link className='Link' to={"/Countdown"}>Click on me</Link>
+      <Header />
+      <Intro />
+      <div className='task__demo'>
+        <div className='task__wrapper'>
+          <TaskLayer />
+        </div>
+      </div>
     </>
   )
 }

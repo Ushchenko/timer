@@ -1,0 +1,118 @@
+.header {
+  box-sizing: border-box;
+  width: 100%;
+  height: 10vh;
+  color: #000;
+  position: fixed;
+  top: 0;
+  transition: .15s;
+  z-index: 100;
+}
+
+.header.scrolled {
+  background: #fffc;
+  backdrop-filter: blur(16px);
+}
+
+.header .header__main {
+  display: flex;
+  flex: 0 10 auto;
+  text-align: center;
+  font-size: 1.15em;
+}
+
+.header .header__left {
+  flex: 0 0 auto;
+  width: 280px;
+}
+
+.header__right {
+  display: flex;
+}
+
+.header__nav {
+  display: flex;
+  max-width: 1280px;
+  margin: auto;
+  padding: 13px 20px;
+}
+
+.logo {
+  font-size: 1.5em;
+  display: flex;
+  align-items: center;
+  height: 29px;
+  width: 86px;
+}
+
+.logo>svg {
+  margin-right: 10px;
+}
+
+.header .header__main {
+  display: flex;
+  text-align: center;
+  flex: 1 1 auto;
+}
+
+.header__menu {
+  display: flex;
+  align-items: center;
+  flex: 1 1 auto;
+}
+
+.nav {
+  flex: 1 1 auto;
+  font-size: 1.05em;
+  font-weight: 500;
+}
+
+.nav>ul {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 10px;
+}
+
+.nav>ul>li {
+  position: relative;
+}
+
+.nav>ul>li>a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 5px;
+}
+
+.header .header__right {
+  text-align: right;
+}
+
+.header__right>button {
+  margin-left: 8px;
+  border-radius: 7px;
+  font-size: 17px;
+  padding: 5px 15px;
+}
+
+.btn.-login {
+  color: var(--text-main-color);
+  background: #ffffff;
+  transition: .16s ease-out;
+  box-shadow: 0px 1px 4px #0000001c;
+}
+
+.btn.-login:hover { 
+  color: var(--text-hover-color);
+}
+
+.btn.-signup {
+  color: var(--text-button-color);
+  background: var(--btn-primary-color);
+  transition: .1s ease-out;
+}
+
+.btn.-signup:hover {
+  background: var(--text-hover-color)
+}

@@ -1,6 +1,11 @@
-.Link {
-  text-decoration: none;
-  border: 1px solid;
-  padding: 15px;
-  margin: 50px;
+.task__demo {
+  display: flex;
+  justify-content: center;
+  max-width: 1280px;
+  margin: auto;
+  padding-top: 36px;
+}
+
+.task__wrapper {
+  background: #505050c2;
 }
