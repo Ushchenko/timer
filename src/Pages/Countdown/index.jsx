@@ -71,17 +71,17 @@ export const Countdown = () => {
 
   return (
 
-    <section className="main">
-      <section className='main__scene'>
-        <section className='scene__title'>
-          <section className='title__head'>
+    <div className="main">
+      <div className='main__scene'>
+        <div className='scene__title'>
+          <div className='title__head'>
             <h1 className='head--baner'>{text.title}</h1>
             <span className='head--span'>
               {curDayName}, {curDay} {curMonth} {curYear} - {endDayName}, {endDay} {endDayMonth} {endDateYear}
             </span>
-          </section>
-        </section>
-        <section className='scene__countdown'>
+          </div>
+        </div>
+        <div className='scene__countdown'>
           <ul className='countdown__timer'>
             <li className='timer__block'>
               <span className='timer__number --left'>{timeLeft.days}</span>
@@ -100,13 +100,13 @@ export const Countdown = () => {
               <span className='timer__text'>Seconds</span>
             </li>
           </ul>
-        </section>
+        </div>
 
-        <section className='scene__note'>
+        <div className='scene__note'>
           {text.note}
-        </section>
+        </div>
 
-      </section>
+      </div>
       <button className='title__button --button' onClick={(e) => {
         setIsCalendarShown((isShown) => !isShown);
       }}>
@@ -120,6 +120,6 @@ export const Countdown = () => {
           </>
         }
       </CalendarContext.Provider>
-    </section>
+    </div>
   )
 }
