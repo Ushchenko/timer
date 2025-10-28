@@ -1,3 +1,7 @@
+html {
+  overflow-y: scroll;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Arial, Helvetica, sans-serif;
@@ -8,7 +12,12 @@ body {
   color: #000;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin: 0;
   padding: 0;
 }
@@ -21,7 +30,7 @@ input {
 a {
   color: var(--text-main-color);
   text-decoration: none;
-  transition: .16s ease-out;
+  transition: 0.16s ease-out;
 }
 
 a:hover {
@@ -39,18 +48,30 @@ li {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
 }
 
 :root {
   --text-main-color: #000;
   --text-hover-color: #00a99b;
   --text-button-color: #fff;
-  
+
   --btn-primary-color: #201e1e;
   --btn-main-color: #fff;
+
+  --box-shadow-color: #0000001c;
+}
+/* 
+::-webkit-scrollbar {
+  width: 8px;
 }
 
-::-webkit-scrollbar {
-  overflow: auto;
+::-webkit-scrollbar-thumb {
+  background-color: rgba(120, 120, 120, 0.4);
+  border-radius: 4px;
 }
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(120, 120, 120, 0.7);
+} */

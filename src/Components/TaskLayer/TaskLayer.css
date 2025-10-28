@@ -1,0 +1,55 @@
+.task__main {
+  position: relative;
+  background: #fffffff6;
+  max-width: 370px;
+  padding: 10px 10px 36px;
+  border-radius: 10px;
+  box-shadow: 0px 1px 4px var(--box-shadow-color);
+}
+
+.task-title {
+  margin: 5px 0px;
+}
+
+.task__element {
+  width: 80%;
+  height: 30%;
+}
+
+.task__element {
+  margin-top: 17px;
+  position: relative;
+  width: 100%;
+}
+
+.element__inner {
+  display: flex;
+  padding: 10px 15px;
+  margin-bottom: 12px;
+  box-shadow: 0px 1px 4px var(--box-shadow-color);
+}
+
+.element-title {
+  user-select: none;
+}
+
+.element-btn {
+  color: var(--text-main-color);
+  margin-left: auto;
+  transition: 0.16s ease-out;
+  user-select: none;
+}
+
+.element-btn:hover {
+  transform: scale(1.2);
+}
+
+/* ====== InputStyle style ====== */
+.task__main > div > div > input {
+  color: #000;
+  height: 48px;
+}
+
+.task__main > div > div > div > button {
+  top: 2.5px;
+}

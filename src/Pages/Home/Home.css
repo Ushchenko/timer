@@ -1,5 +1,4 @@
 .task__demo {
-  display: flex;
   justify-content: center;
   max-width: 1280px;
   margin: auto;
@@ -7,5 +6,17 @@
 }
 
 .task__wrapper {
-  background: #505050c2;
+  max-width: 1280px;
+}
+
+.task__nav {
+  margin: auto;
+  display: flex;
+  max-width: 1280px;
+}
+
+.task__layer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  row-gap: 25px;
 }

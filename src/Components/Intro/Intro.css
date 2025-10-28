@@ -53,7 +53,6 @@ h1 {
   font-size: 18px;
 }
 
-
 /* ======= FORM ======= */
 .form__content {
   box-sizing: border-box;
@@ -67,7 +66,7 @@ h1 {
   max-width: 548px;
 }
 
-.form__content-additional>form {
+.form__content-additional > form {
   display: inline-block;
 }
 
@@ -79,7 +78,7 @@ h1 {
 }
 
 .form__button.-btn:hover {
-  background: var(--text-hover-color)
+  background: var(--text-hover-color);
 }
 
 .separator {
@@ -93,7 +92,7 @@ h1 {
 }
 
 .google-btn {
-  padding: 17.5px 22px;
+  padding: 14.5px 22px;
   background: #fff;
   box-shadow: 0px 1px 4px #0000001c;
   border-radius: 10px;
