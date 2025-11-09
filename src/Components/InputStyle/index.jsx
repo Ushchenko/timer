@@ -5,10 +5,10 @@ export const InputStyle = ({
   placeholder,
   type,
   btnText,
-  width,
-  paddingRight,
-  customFunc,
+  customButtonFunc,
   value,
+  inputStyleProps,
+  buttonStyleProps,
   onChange,
 }) => {
   const inputRef = useRef(null);
@@ -28,13 +28,14 @@ export const InputStyle = ({
             value={value}
             onChange={onChange}
             ref={inputRef}
-            style={{width: width, paddingRight: paddingRight}}
+            style={inputStyleProps}
           />
           <div className="action-btn">
             <button
               type="button"
               className="action-btn -btn"
-              onClick={value ? customFunc : handleClick}
+              onClick={value ? customButtonFunc : handleClick}
+              style={buttonStyleProps}
             >
               {btnText}
             </button>

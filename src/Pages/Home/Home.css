@@ -54,6 +54,7 @@
 .layer-droppable {
   display: inline-flex;
   flex-direction: row;
+  max-height: auto;
 }
 
 .layer-item {
