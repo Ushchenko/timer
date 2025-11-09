@@ -6,6 +6,7 @@ import CloseIcon from "@mui/icons-material/Close";
 
 export const TaskItem = ({ task, layerId, deleteTask }) => {
   const [isBoxChecked, setIsBoxChecked] = useState(task.isChecked);
+  const [isEditItemVisible, setIsEditItemVisible] = useState(false);
   const [isCheckboxHidden, setIsCheckBoxHidden] = useState(true);
 
   const { handleSetTaskIsChecked } = useContext(TaskContext);
@@ -15,10 +16,16 @@ export const TaskItem = ({ task, layerId, deleteTask }) => {
       <div
         className="element__inner"
         onMouseEnter={() => {
-          setIsCheckBoxHidden(() => setIsCheckBoxHidden(false));
+          setIsCheckBoxHidden(() => {
+            setIsCheckBoxHidden(false);
+            setIsEditItemVisible(true);
+          });
         }}
         onMouseLeave={() => {
-          setIsCheckBoxHidden(() => setIsCheckBoxHidden(true));
+          setIsCheckBoxHidden(() => {
+            setIsCheckBoxHidden(true);
+            setIsEditItemVisible(false);
+          });
         }}
       >
         <div className="inner__wrapper">
@@ -66,11 +73,18 @@ export const TaskItem = ({ task, layerId, deleteTask }) => {
             {task.text}
           </span>
           <div className="btn-layer">
-            <button className="element-btn -right -upd">
+            <button
+              className={`element-btn -right -upd ${
+                isEditItemVisible ? "-editable" : ""
+              }`}
+            >
               <EditIcon fontSize="inherit" />
             </button>
             <button
-              className="element-btn -right -add"
+              id={`elementBtnAdd-${task.id}`}
+              className={`element-btn -right -add ${
+                isEditItemVisible ? "-editable" : ""
+              }`}
               onClick={() => deleteTask(layerId, task.id)}
             >
               <CloseIcon fontSize="inherit" />

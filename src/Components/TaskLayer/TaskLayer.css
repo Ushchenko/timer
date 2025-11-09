@@ -51,22 +51,19 @@
 /* ===================== */
 
 .task__element {
-  width: 80%;
-  height: 30%;
-}
-
-.task__element {
-  margin-top: 17px;
   position: relative;
-  width: 100%;
 }
 
+.task__element > div {
+  margin-bottom: 14px;
+}
 /* ====== InputStyle style ====== */
-.task__main > div > div > input {
+/* .task__main > div > div > input {
   color: #000;
   height: 48px;
+  margin-bottom: 14px;
 }
 
 .task__main > div > div > div > button {
   top: 2.5px;
-}
+} */

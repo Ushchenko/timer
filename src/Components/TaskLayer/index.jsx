@@ -56,92 +56,102 @@ export const TaskLayer = ({
     <section className="task__layer-task">
       <Droppable droppableId={`${layerId}`}>
         {(provided) => (
-          <div
-            className="task__main"
-            ref={provided.innerRef}
-            {...provided.droppableProps}
-            style={{ maxWidth: maxWidth }}
-          >
+          <>
             <div
-              className="task-line"
-              style={{ background: lineColor }}
-              onClick={() => setIsColoPickerVisible((p) => !p)}
+              className="task__main"
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              style={{ maxWidth: maxWidth }}
             >
-              {isColoPickerVisible && (
-                <div
-                  ref={pickerRef}
-                  className="task-color__picker"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <Block
-                    color={lineColor}
-                    widthBlock={"100%"}
-                    showMainBlock={false}
-                    showSmallBlock={true}
-                    showTriangle={false}
-                    swatchStyle={{ style: { width: 24, height: 24 } }}
-                    onChange={(color, evn) => {
-                      handleColorChange(color, evn);
-                    }}
-                  />
-                </div>
-              )}
-            </div>
-            <div className="task-header">
-              <h2 className="task-header-title">{title}</h2>
               <div
-                className="task-header-color__picker-button"
+                className="task-line"
+                style={{ background: lineColor }}
                 onClick={() => setIsColoPickerVisible((p) => !p)}
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="currentColor"
-                  className="bi bi-three-dots"
-                  viewBox="0 0 16 16"
+                {isColoPickerVisible && (
+                  <div
+                    ref={pickerRef}
+                    className="task-color__picker"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <Block
+                      color={lineColor}
+                      widthBlock={"100%"}
+                      showMainBlock={false}
+                      showSmallBlock={true}
+                      showTriangle={false}
+                      swatchStyle={{ style: { width: 24, height: 24 } }}
+                      onChange={(color, evn) => {
+                        handleColorChange(color, evn);
+                      }}
+                    />
+                  </div>
+                )}
+              </div>
+              <div className="task-header">
+                <h2 className="task-header-title">{title}</h2>
+                <div
+                  className="task-header-color__picker-button"
+                  onClick={() => setIsColoPickerVisible((p) => !p)}
                 >
-                  <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3" />
-                </svg>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="currentColor"
+                    className="bi bi-three-dots"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3" />
+                  </svg>
+                </div>
+              </div>
+              <InputStyle
+                placeholder={"Type the task"}
+                type="name"
+                btnText={"Add"}
+                customButtonFunc={createTask}
+                value={inputValue}
+                inputStyleProps={{
+                  color: "#000",
+                  width: 125,
+                  height: 48,
+                  paddingRight: 110,
+                  marginBottom: 14,
+                }}
+                buttonStyleProps={{
+                  top: 2.5,
+                }}
+                onChange={(e) => {
+                  setInputValue(e.target.value);
+                }}
+              />
+              <div className="task__element">
+                {tasks.map((task, index) => (
+                  <Draggable
+                    key={task.id}
+                    draggableId={`${task.id}`}
+                    index={index}
+                  >
+                    {(provided) => (
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                      >
+                        <TaskItem
+                          task={task}
+                          layerId={layerId}
+                          deleteTask={deleteTask}
+                        />
+                      </div>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
               </div>
             </div>
-            <InputStyle
-              placeholder={"Type the task"}
-              type="name"
-              btnText={"Add"}
-              width={125}
-              paddingRight={110}
-              customFunc={createTask}
-              value={inputValue}
-              onChange={(e) => {
-                setInputValue(e.target.value);
-              }}
-            />
-            <div className="task__element">
-              {tasks.map((task, index) => (
-                <Draggable
-                  key={task.id}
-                  draggableId={`${task.id}`}
-                  index={index}
-                >
-                  {(provided) => (
-                    <div
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                    >
-                      <TaskItem
-                        task={task}
-                        layerId={layerId}
-                        deleteTask={deleteTask}
-                      />
-                    </div>
-                  )}
-                </Draggable>
-              ))}
-            </div>
-            {provided.placeholder}
-          </div>
+          </>
         )}
       </Droppable>
     </section>
