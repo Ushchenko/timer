@@ -1,6 +1,5 @@
 .content {
   position: relative;
-  max-width: 548px;
   margin: auto;
   justify-content: center;
   align-items: center;
@@ -23,10 +22,6 @@
   height: 52px;
   padding: 0px 15px;
   transition: 0.15s;
-}
-
-.action-input.-solid {
-  padding-right: 144px;
 }
 
 .action-input:focus {

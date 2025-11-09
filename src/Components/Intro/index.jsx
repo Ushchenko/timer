@@ -2,9 +2,16 @@ import { Link, redirect, useNavigate } from "react-router-dom";
 import { InputStyle } from "../InputStyle";
 import "./Intro.css";
 import CheckIcon from "@mui/icons-material/Check";
+import { useState } from "react";
 
 export const Intro = () => {
-  const navigateCountdown = useNavigate();
+  const [inputValue, setInputValue] = useState("");
+
+  const submitEmail = () => {
+    //TODO: add post logic to server
+    console.log(inputValue);
+    setInputValue("");
+  };
 
   return (
     <>
@@ -36,6 +43,12 @@ export const Intro = () => {
                       placeholder={"name@gmail.com"}
                       type={"email"}
                       btnText={"Get Started"}
+                      paddingRight={"144px"}
+                      customFunc={submitEmail}
+                      value={inputValue}
+                      onChange={(e) => {
+                        setInputValue(e.target.value);
+                      }}
                     />
                     <span className="separator"></span>
                     <div className="additions">

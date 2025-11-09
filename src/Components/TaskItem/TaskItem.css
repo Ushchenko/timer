@@ -1,0 +1,89 @@
+.element__inner {
+  /* display: flex; */
+  max-width: 100%;
+  padding: 10px 15px;
+  margin-bottom: 12px;
+  align-items: center;
+  box-shadow: 0px 0px 3px 1px var(--box-shadow-color);
+  box-sizing: border-box;
+  border: 3px solid transparent;
+  border-radius: 5px;
+  background: #ffffffa1;
+  transition: border-color 0.15s ease-in-out;
+}
+
+.inner__wrapper {
+  display: flex;
+  width: 100%;
+}
+
+.element__inner:hover {
+  border-color: #6d6d6d;
+  box-shadow: 0px;
+}
+
+.checkbox {
+  display: flex;
+  width: 20px;
+  opacity: 1;
+  justify-content: center;
+  transform: translateX(0px);
+  margin-right: 5px;
+  transition: 0.4s ease-out;
+}
+
+.checkbox:hover {
+  cursor: pointer;
+}
+
+.checkbox.-hidden {
+  opacity: 0;
+}
+
+.checkbox.-checked {
+  transform: translateX(0px);
+}
+
+.element-title {
+  flex: 1;
+  max-width: 100%;
+  user-select: none;
+  transition: 0.4s ease;
+  margin-top: 1px;
+  white-space: nowrap;
+  transform: translateX(5px);
+}
+
+.element-title.-hidden {
+  transform: translateX(-20px);
+}
+
+.btn-layer {
+  position: relative;
+}
+
+.element-btn {
+  position: absolute;
+  padding: 0;
+  color: var(--text-main-color);
+  margin-left: auto;
+  transition: 0.16s ease-out;
+  user-select: none;
+  transition: .15s ease-out;
+  padding: 1px;
+}
+
+.element-btn.-upd {
+  right: 15px;
+  font-size: 14px;
+}
+
+.element-btn.-add {
+  font-size: 18px;
+  right: -10px;
+  top: -2px;
+}
+
+.element-btn:hover {
+  transform: scale(1.34);
+}

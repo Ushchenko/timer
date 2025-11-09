@@ -9,14 +9,53 @@
   max-width: 1280px;
 }
 
+
+/* ==== Nav to task demo ==== */
 .task__nav {
   margin: auto;
-  display: flex;
-  max-width: 1280px;
+  max-width: 1118px;
+  margin-bottom: 25px;
 }
 
-.task__layer {
+.nav__inner {
+  width: 100%;
+  position: relative;
+}
+
+.nav__list {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  row-gap: 25px;
+  width: 100%;
+  align-items: center;
+  justify-items: center;
+  grid-template-columns: repeat(3, 3fr);
+}
+
+.nav__item {
+  font-size: 1.2em;
+  font-weight: 600;
+  transition: 0.15s ease-out;
+  cursor: pointer;
+}
+
+.nav__item:hover {
+  color: var(--text-hover-color);
+}
+
+/* ==== TASK LAYER ==== */
+
+.task__layer {
+  border-radius: 5px;
+  overflow-x: scroll;
+  box-sizing: border-box;
+  background: linear-gradient(108.3deg, #fff8f9 7.99%, #f4f7fc 98.21%);
+  min-height: 800px;
+}
+
+.layer-droppable {
+  display: inline-flex;
+  flex-direction: row;
+}
+
+.layer-item {
+  margin: 25px;
 }

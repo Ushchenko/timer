@@ -23,7 +23,7 @@ export const Calendar = () => {
   const [nowMonth, setMonth] = useState(nowDate.getMonth());
   const [nowYear, setYear] = useState(nowDate.getFullYear());
 
-  const [parent] = useAutoAnimate();
+  const [parent] = useAutoAnimate({ duration: 500 });
 
   function prevMonth() {
     if (nowMonth === 0) {

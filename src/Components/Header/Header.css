@@ -88,6 +88,10 @@
   text-align: right;
 }
 
+/* .menu__item:hover {
+  color: var(--text-hover-color);
+} */
+
 .header__right > button {
   margin-left: 8px;
   border-radius: 7px;
