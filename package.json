@@ -1,6 +1,6 @@
 {
   "name": "timer",
-  "version": "0.1.5",
+  "version": "0.1.7",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -10,7 +10,12 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@uiw/color-convert": "file:.yalc/@uiw/color-convert",
+    "@uiw/react-color-block": "file:.yalc/@uiw/react-color-block",
+    "@uiw/react-color-editable-input": "file:.yalc/@uiw/react-color-editable-input",
+    "@uiw/react-color-swatch": "file:.yalc/@uiw/react-color-swatch",
     "react": "^18.2.0",
+    "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^18.2.0",
     "react-router-dom": "^7.9.4",
     "react-scripts": "^5.0.1",

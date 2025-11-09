@@ -4,7 +4,6 @@ import { Countdown } from "./Pages/Countdown";
 import { Home } from "./Pages/Home";
 
 function App() {
-
   return (
     <>
       <Routes>

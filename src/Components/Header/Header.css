@@ -1,11 +1,10 @@
 .header {
   box-sizing: border-box;
   width: 100%;
-  height: 10vh;
   color: #000;
   position: fixed;
   top: 0;
-  transition: .15s;
+  transition: 0.15s;
   z-index: 100;
 }
 
@@ -45,7 +44,7 @@
   width: 86px;
 }
 
-.logo>svg {
+.logo > svg {
   margin-right: 10px;
 }
 
@@ -67,18 +66,18 @@
   font-weight: 500;
 }
 
-.nav>ul {
+.nav > ul {
   display: flex;
   align-items: center;
   justify-content: space-around;
   padding: 0 10px;
 }
 
-.nav>ul>li {
+.nav > ul > li {
   position: relative;
 }
 
-.nav>ul>li>a {
+.nav > ul > li > a {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -89,7 +88,11 @@
   text-align: right;
 }
 
-.header__right>button {
+/* .menu__item:hover {
+  color: var(--text-hover-color);
+} */
+
+.header__right > button {
   margin-left: 8px;
   border-radius: 7px;
   font-size: 17px;
@@ -99,20 +102,20 @@
 .btn.-login {
   color: var(--text-main-color);
   background: #ffffff;
-  transition: .16s ease-out;
+  transition: 0.16s ease-out;
   box-shadow: 0px 1px 4px #0000001c;
 }
 
-.btn.-login:hover { 
+.btn.-login:hover {
   color: var(--text-hover-color);
 }
 
 .btn.-signup {
   color: var(--text-button-color);
   background: var(--btn-primary-color);
-  transition: .1s ease-out;
+  transition: 0.1s ease-out;
 }
 
 .btn.-signup:hover {
-  background: var(--text-hover-color)
+  background: var(--text-hover-color);
 }

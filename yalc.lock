@@ -1,0 +1,21 @@
+{
+  "version": "v1",
+  "packages": {
+    "@uiw/react-color-block": {
+      "signature": "285311f818af243af074854a584a8763",
+      "file": true
+    },
+    "@uiw/color-convert": {
+      "signature": "8705345ad1b99ada0e8587c03d11e1af",
+      "file": true
+    },
+    "@uiw/react-color-editable-input": {
+      "signature": "6e0e6dd4dbb170fde74c8f7819cd0f03",
+      "file": true
+    },
+    "@uiw/react-color-swatch": {
+      "signature": "e8b1bf497e97a17b728dce7acf55e84d",
+      "file": true
+    }
+  }
+}
