@@ -43,7 +43,7 @@ export const Intro = () => {
                       placeholder={"name@gmail.com"}
                       type={"email"}
                       btnText={"Get Started"}
-                      inputStyleProps={{ paddingRight: 144 }}
+                      inputStyleProps={{ paddingRight: 114 }}
                       customFunc={submitEmail}
                       value={inputValue}
                       onChange={(e) => {
