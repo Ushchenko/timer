@@ -3,10 +3,10 @@ import "./Home.css";
 import { Header } from "../../Components/Header";
 import { Intro } from "../../Components/Intro";
 import { TaskLayer } from "../../Components/TaskLayer";
+import { TaskDemo } from "../../Components/TaskDemo";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { useAutoAnimate } from "@formkit/auto-animate/react";
 
-export const TaskContext = createContext(null);
+import { TaskContext } from "../../Context";
 
 export const Home = () => {
   const [tasksLayer, setTasksLayer] = useState([
@@ -211,6 +211,7 @@ export const Home = () => {
           </TaskContext.Provider>
         </div>
       </section>
+      <TaskDemo />
     </>
   );
 };
