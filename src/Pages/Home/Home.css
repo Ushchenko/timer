@@ -30,14 +30,15 @@
   grid-template-columns: repeat(3, 3fr);
 }
 
-.nav__item {
+.nav__btn {
+  color: var(--text-main-color);
   font-size: 1.2em;
   font-weight: 600;
   transition: 0.15s ease-out;
   cursor: pointer;
 }
 
-.nav__item:hover {
+.nav__btn:hover ~ button{
   color: var(--text-hover-color);
 }
 
@@ -45,10 +46,11 @@
 
 .task__layer {
   border-radius: 5px;
-  overflow-x: scroll;
+  overflow: scroll;
   box-sizing: border-box;
   background: linear-gradient(108.3deg, #fff8f9 7.99%, #f4f7fc 98.21%);
-  min-height: 800px;
+  min-height: 600px;
+  max-height: 900;
 }
 
 .layer-droppable {

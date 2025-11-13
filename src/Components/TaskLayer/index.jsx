@@ -1,5 +1,5 @@
 import "./TaskLayer.css";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { Droppable, Draggable } from "react-beautiful-dnd";
 import { InputStyle } from "../InputStyle";
 import Block from "@uiw/react-color-block";
 import { TaskItem } from "../TaskItem";

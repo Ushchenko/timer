@@ -1,0 +1,18 @@
+.task__layer {
+  border-radius: 5px;
+  overflow: scroll;
+  box-sizing: border-box;
+  background: linear-gradient(108.3deg, #fff8f9 7.99%, #f4f7fc 98.21%);
+  min-height: 600px;
+  max-height: 900;
+}
+
+.layer-droppable {
+  display: inline-flex;
+  flex-direction: row;
+  max-height: auto;
+}
+
+.layer-item {
+  margin: 25px;
+}

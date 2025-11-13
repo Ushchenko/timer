@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import "./TaskItem.css";
-import { TaskContext } from "../../Pages/Home";
+import { TaskContext } from "../../Context";
 import EditIcon from "@mui/icons-material/Edit";
 import CloseIcon from "@mui/icons-material/Close";
 
