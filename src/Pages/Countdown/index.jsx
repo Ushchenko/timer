@@ -1,9 +1,8 @@
 import "./Countdown.css";
-import { useState, useEffect, createContext } from "react";
+import { useState, useEffect } from "react";
 import { Calendar } from "../../Components/Calendar/index";
 import { calculateCountdownInterval } from "../../Utils/CountdownState";
-
-export const CalendarContext = createContext(null);
+import { CalendarContext } from "../../Context";
 
 let text = {
   title: ["Trip to UK"],

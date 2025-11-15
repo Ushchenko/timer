@@ -75,11 +75,11 @@
   margin-left: auto;
   transition: 0.16s ease-out;
   user-select: none;
-  transition: .15s ease-out;
+  transition: 0.15s ease-out;
 }
 
 .element-btn > svg {
-  transition: .15s ease-out;
+  transition: 0.15s ease-out;
 }
 
 .element-btn.-editable {
@@ -98,4 +98,52 @@
 
 .element-btn:hover > svg {
   transform: scale(1.26);
+}
+
+/* ==== task item animation ==== */
+.task-enter {
+  animation: taskEnter 0.3s ease-out;
+}
+
+@keyframes taskEnter {
+  from {
+    opacity: 0;
+    transform: translateY(-15px) scale(0.7);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.task-exit {
+  animation: taskExit 0.25s ease-in forwards;
+}
+
+@keyframes taskExit {
+  from {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    height: var(--task-height, auto);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(50%) scale(0);
+  }
+}
+
+.task-sort {
+  animation: taskSort 0.18s ease-out;
+}
+
+@keyframes taskSort {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.97);
+  }
+  100% {
+    transform: scale(1);
+  }
 }

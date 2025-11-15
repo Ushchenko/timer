@@ -1,37 +1,52 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import "./TaskItem.css";
 import { TaskContext } from "../../Context";
 import EditIcon from "@mui/icons-material/Edit";
 import CloseIcon from "@mui/icons-material/Close";
+import { TaskLayerDeleteItemContext } from "../../Context";
 
-export const TaskItem = ({ task, layerId, deleteTask }) => {
+export const TaskItem = ({ task, layerId }) => {
   const [isBoxChecked, setIsBoxChecked] = useState(task.isChecked);
   const [isEditItemVisible, setIsEditItemVisible] = useState(false);
   const [isCheckboxHidden, setIsCheckBoxHidden] = useState(true);
 
+  const hoverTaskRef = useRef(null);
+
+  const deleteTaskFromLayer = useContext(TaskLayerDeleteItemContext);
+
   const { handleSetTaskIsChecked } = useContext(TaskContext);
+
+  useEffect(() => {
+    task.hoverNext = () => {
+      setTimeout(() => {
+        setIsCheckBoxHidden(false);
+        setIsEditItemVisible(true);
+      }, 310);
+    };
+  }, [task]);
 
   return (
     <>
       <div
-        className="element__inner"
+        ref={hoverTaskRef}
+        className={`element__inner 
+          ${task.animate === "enter" ? "task-enter" : ""}
+          ${task.animate === "exit" ? "task-exit" : ""}
+          ${task.animate === "sort" ? "task-sort" : ""}
+        `}
         onMouseEnter={() => {
-          setIsCheckBoxHidden(() => {
-            setIsCheckBoxHidden(false);
-            setIsEditItemVisible(true);
-          });
+          setIsCheckBoxHidden(false);
+          setIsEditItemVisible(true);
         }}
         onMouseLeave={() => {
-          setIsCheckBoxHidden(() => {
-            setIsCheckBoxHidden(true);
-            setIsEditItemVisible(false);
-          });
+          setIsCheckBoxHidden(true);
+          setIsEditItemVisible(false);
         }}
       >
         <div className="inner__wrapper">
           <div
             className={`checkbox ${
-              isCheckboxHidden && task.isChecked == false
+              isCheckboxHidden && task.isChecked === false
                 ? "-hidden"
                 : "-checked"
             }`}
@@ -65,7 +80,7 @@ export const TaskItem = ({ task, layerId, deleteTask }) => {
           </div>
           <span
             className={`element-title ${
-              isCheckboxHidden && task.isChecked == false
+              isCheckboxHidden && task.isChecked === false
                 ? "-hidden"
                 : "-checked"
             }`}
@@ -85,7 +100,7 @@ export const TaskItem = ({ task, layerId, deleteTask }) => {
               className={`element-btn -right -add ${
                 isEditItemVisible ? "-editable" : ""
               }`}
-              onClick={() => deleteTask(layerId, task.id)}
+              onClick={() => deleteTaskFromLayer(layerId, task.id)}
             >
               <CloseIcon fontSize="inherit" />
             </button>
