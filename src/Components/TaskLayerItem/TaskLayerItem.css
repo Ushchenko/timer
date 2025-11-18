@@ -1,10 +1,23 @@
+.task__layer-task {
+  box-shadow: 0px 0px 3px 1px var(--box-shadow-color);
+}
+
+.task__layer-task-header {
+  position: relative;
+  background: #fffffff6;
+  max-width: 255px;
+  padding: 10px 10px 0px;
+  border-radius: 5px 5px 0px 0px;
+  flex-grow: 1;
+}
+
 .task__main {
   position: relative;
   background: #fffffff6;
   max-width: 255px;
   padding: 10px 10px 20px;
-  border-radius: 5px;
-  box-shadow: 0px 0px 3px 1px var(--box-shadow-color);
+  border-radius: 0px 0px 5px 5px;
+  flex-grow: 0;
 }
 
 .task-line {

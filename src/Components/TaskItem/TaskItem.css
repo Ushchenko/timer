@@ -55,7 +55,7 @@
 }
 
 .element-title.-hidden {
-  transform: translateX(-20px);
+  transform: translateX(-25px);
 }
 
 .btn-layer {
@@ -75,7 +75,6 @@
   margin-left: auto;
   transition: 0.16s ease-out;
   user-select: none;
-  transition: 0.15s ease-out;
 }
 
 .element-btn > svg {
@@ -102,7 +101,7 @@
 
 /* ==== task item animation ==== */
 .task-enter {
-  animation: taskEnter 0.3s ease-out;
+  animation: taskEnter 0.25s ease-out;
 }
 
 @keyframes taskEnter {
@@ -124,26 +123,9 @@
   from {
     opacity: 1;
     transform: translateX(0) scale(1);
-    height: var(--task-height, auto);
   }
   to {
     opacity: 0;
     transform: translateX(50%) scale(0);
-  }
-}
-
-.task-sort {
-  animation: taskSort 0.18s ease-out;
-}
-
-@keyframes taskSort {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(0.97);
-  }
-  100% {
-    transform: scale(1);
   }
 }

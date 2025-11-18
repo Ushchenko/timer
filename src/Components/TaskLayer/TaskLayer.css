@@ -1,19 +1,43 @@
-
 .task__layer {
+  display: flex;
   border-radius: 5px;
   box-sizing: border-box;
   background: linear-gradient(108.3deg, #fff8f9 7.99%, #f4f7fc 98.21%);
+  overflow: scroll;
+  min-height: 600px;
+  max-height: 700px;
+  user-select: none;
 }
 
 .layer-droppable {
-  display: flex;
-  overflow-x: scroll;
-  overflow-y: auto;
-  min-height: 600px;
-  max-height: 900;
+  display: inline-flex;
 }
 
 .layer-item {
+  display: flex;
   height: fit-content;
   margin: 25px;
+}
+
+.layer__add {
+  margin: 25px;
+}
+
+.add-btn {
+  color: var(--text-main-color);
+  padding: 10px;
+  font-size: 22px;
+  width: 220px;
+  min-width: 200px;
+  background: #ffffffb2;
+  border-radius: 5px;
+  box-shadow: 0px 0px 3px 1px var(--box-shadow-color);
+  box-sizing: border-box;
+  border: 3px solid transparent;
+  transition: border-color .15s ease-in-out;
+}
+
+.add-btn:hover {
+  border-color: #6d6d6d;
+  box-shadow: 0px;
 }

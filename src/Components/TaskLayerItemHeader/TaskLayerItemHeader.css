@@ -1,0 +1,29 @@
+.task__layer-task-header {
+  position: relative;
+  background: #fffffff6;
+  max-width: 255px;
+  padding: 10px 10px 0px;
+  border-radius: 5px 5px 0px 0px;
+  flex-grow: 1;
+}
+
+.task-header {
+  display: flex;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  justify-content: space-between;
+}
+
+.task-header-title {
+  margin: 5px;
+}
+
+.task-header-color__picker-button {
+  display: flex;
+  align-items: center;
+  margin: 5px;
+}
+
+.task-header-color__picker-button:hover {
+  cursor: pointer;
+}

@@ -18,7 +18,11 @@ export const TaskDemo = () => {
       tasks: [
         { id: 4, text: "4", isChecked: true },
         { id: 5, text: "5", isChecked: true },
-        { id: 6, text: "6", isChecked: false },
+        {
+          id: 6,
+          text: "asdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdasasdas",
+          isChecked: false,
+        },
       ],
     },
     {
@@ -102,37 +106,45 @@ export const TaskDemo = () => {
     );
   };
 
+  const TaskContextValue = {
+    handleSetTaskIsChecked: handleSetTaskIsChecked,
+    handleSort: handleSort,
+    handleCreateTaskLayer: handleCreateTaskLayer,
+  };
+
   return (
-    <section className="task__demo">
-      <div className="task__wrapper">
-        <div className="task__nav">
-          <nav className="nav__inner">
-            <ul className="nav__list">
-              <li className="nav__item">
-                <button
-                  className="nav__btn"
-                  onClick={() => {
-                    handleCreateTaskLayer({ title: `title ${1}` });
-                  }}
-                >
-                  Create new task
-                </button>
-              </li>
-              <li className="nav__item">
-                <button className="nav__btn">View all</button>
-              </li>
-              <li className="nav__item">
-                <button className="nav__btn" onClick={() => console.log()}>
-                  ...
-                </button>
-              </li>
-            </ul>
-          </nav>
+    <>
+      <section className="task__demo">
+        <div className="task__wrapper">
+          <div className="task__nav">
+            <nav className="nav__inner">
+              <ul className="nav__list">
+                <li className="nav__item">
+                  <button
+                    className="nav__btn"
+                    onClick={() => {
+                      handleCreateTaskLayer({ title: `title ${1}` });
+                    }}
+                  >
+                    Create new task
+                  </button>
+                </li>
+                <li className="nav__item">
+                  <button className="nav__btn">View all</button>
+                </li>
+                <li className="nav__item">
+                  <button className="nav__btn" onClick={() => console.log()}>
+                    ...
+                  </button>
+                </li>
+              </ul>
+            </nav>
+          </div>
+          <TaskContext.Provider value={TaskContextValue}>
+            <TaskLayer tasksLayer={tasksLayer} setTasksLayer={setTasksLayer} />
+          </TaskContext.Provider>
         </div>
-        <TaskContext.Provider value={{ handleSetTaskIsChecked, handleSort }}>
-          <TaskLayer tasksLayer={tasksLayer} setTasksLayer={setTasksLayer} />
-        </TaskContext.Provider>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };

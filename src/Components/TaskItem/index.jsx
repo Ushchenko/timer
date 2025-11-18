@@ -1,18 +1,19 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import "./TaskItem.css";
 import { TaskContext } from "../../Context";
 import EditIcon from "@mui/icons-material/Edit";
 import CloseIcon from "@mui/icons-material/Close";
 import { TaskLayerDeleteItemContext } from "../../Context";
 
-export const TaskItem = ({ task, layerId }) => {
+export const TaskItem = React.memo(function TaskItem({ task, layerId }) {
+  const hoverTaskRef = useRef(null);
+
   const [isBoxChecked, setIsBoxChecked] = useState(task.isChecked);
   const [isEditItemVisible, setIsEditItemVisible] = useState(false);
   const [isCheckboxHidden, setIsCheckBoxHidden] = useState(true);
 
-  const hoverTaskRef = useRef(null);
 
-  const deleteTaskFromLayer = useContext(TaskLayerDeleteItemContext);
+  const { deleteTaskFromLayer } = useContext(TaskLayerDeleteItemContext);
 
   const { handleSetTaskIsChecked } = useContext(TaskContext);
 
@@ -21,7 +22,7 @@ export const TaskItem = ({ task, layerId }) => {
       setTimeout(() => {
         setIsCheckBoxHidden(false);
         setIsEditItemVisible(true);
-      }, 310);
+      }, 250);
     };
   }, [task]);
 
@@ -110,4 +111,4 @@ export const TaskItem = ({ task, layerId }) => {
       </div>
     </>
   );
-};
+});
