@@ -1,6 +1,6 @@
 import "../Components/Calendar/Calendar.css"
 import { useContext } from "react";
-import { CalendarContext } from "../Pages/Countdown"
+import { CalendarContext } from "../Context";
 
 export const CountCalendarDays = ({ nowDate, year, month }) => {
   const { getEndDate, getCalendarIsShown } = useContext(CalendarContext)
@@ -27,22 +27,22 @@ export const CountCalendarDays = ({ nowDate, year, month }) => {
     getCalendarIsShown(false)
   }
 
-  const createListItem = ({ type, day }) => {
-    const isCurrentDay =
-      day === nowDate.getDate() &&
-      year === new Date().getFullYear() &&
-      month === new Date().getMonth()
+  // const createListItem = ({ type, day }) => {
+  //   const isCurrentDay =
+  //     day === nowDate.getDate() &&
+  //     year === new Date().getFullYear() &&
+  //     month === new Date().getMonth()
 
-    return (
-      <li
-        key={`${type}-${day}`}
-        className={`days--number ${isCurrentDay ? "--cur" : `${type}`}`}
-        onClick={(e) => selectDay(day, e)}
-      >
-        {day}
-      </li>
-    )
-  }
+  //   return (
+  //     <li
+  //       key={`${type}-${day}`}
+  //       className={`days--number ${isCurrentDay ? "--cur" : `${type}`}`}
+  //       onClick={(e) => selectDay(day, e)}
+  //     >
+  //       {day}
+  //     </li>
+  //   )
+  // }
 
   const calendarDays = {
     days: [],

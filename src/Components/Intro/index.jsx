@@ -1,4 +1,4 @@
-import { Link, redirect, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { InputStyle } from "../InputStyle";
 import "./Intro.css";
 import CheckIcon from "@mui/icons-material/Check";

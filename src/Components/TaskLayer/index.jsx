@@ -1,159 +1,280 @@
 import "./TaskLayer.css";
-import { Droppable, Draggable } from "react-beautiful-dnd";
-import { InputStyle } from "../InputStyle";
-import Block from "@uiw/react-color-block";
-import { TaskItem } from "../TaskItem";
-import { useEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useContext,
+} from "react";
+import { TaskLayerItem } from "../TaskLayerItem";
+import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
+import { TaskLayerDeleteItemContext } from "../../Context";
+import { TaskContext } from "../../Context";
 
-export const TaskLayer = ({
-  maxWidth,
-  layerId,
-  title,
-  tasks,
-  addTask,
-  deleteTask,
-}) => {
-  const [inputValue, setInputValue] = useState("");
+export const TaskLayer = React.memo(function TaskLayer({
+  tasksLayer,
+  setTasksLayer,
+}) {
+  const mouseDragScrollRef = useRef(null);
 
-  const [lineColor, setLineColor] = useState(`#00a99b`);
-  const [isColoPickerVisible, setIsColoPickerVisible] = useState(false);
+  const { handleCreateTaskLayer } = useContext(TaskContext);
 
-  const pickerRef = useRef(null);
+  const [cancelDropAnimation, setCancelDropAnimation] = useState(false);
 
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [startY, setStartY] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const [scrollTop, setTop] = useState(0);
+
+  const isOnDragHandle = useCallback((target) => {
+    return (
+      !!target.closest("[data-rfd-drag-handle-draggable-id]") ||
+      !!target.closest("[data-rfd-draggable-id]") ||
+      !!target.closest("[data-drag-handle]")
+    );
+  }, []);
+
+  //handle mouse drag to scroll
   useEffect(() => {
-    const handeCloseEvent = (evn) => {
-      if (pickerRef.current && !pickerRef.current.contains(evn.target))
-        setIsColoPickerVisible(false);
+    const element = mouseDragScrollRef.current;
+    if (!element) return;
 
-      if (evn.key === "Escape" || evn.key === "Enter") {
-        setIsColoPickerVisible(false);
-      }
+    const handleMouseDown = (e) => {
+      if (isOnDragHandle(e.target)) return;
+      setIsDragging(true);
+      setStartX(e.pageX - element.offsetLeft);
+      setStartY(e.pageY - element.offsetTop);
+      setScrollLeft(element.scrollLeft);
+      setTop(element.scrollTop);
+      element.style.userSelect = "none";
     };
 
-    document.addEventListener("mousedown", handeCloseEvent);
-    document.addEventListener("keydown", handeCloseEvent);
+    const handleMouseMove = (e) => {
+      if (!isDragging) return;
+      e.preventDefault();
+      const x = e.pageX - element.offsetLeft;
+      const y = e.pageY - element.offsetTop;
+      const walkX = x - startX;
+      const walkY = y - startY;
+      element.scrollLeft = scrollLeft - walkX;
+      element.scrollTop = scrollTop - walkY;
+    };
+
+    const handleMouseUp = (e) => {
+      setIsDragging(false);
+      element.style.userSelect = "";
+    };
+
+    element.addEventListener("mousedown", handleMouseDown);
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseup", handleMouseUp);
 
     return () => {
-      document.removeEventListener("mousedown", handeCloseEvent);
-      document.removeEventListener("keydown", handeCloseEvent);
+      element.removeEventListener("mousedown", handleMouseDown);
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
     };
-  }, [isColoPickerVisible]);
+  }, [isDragging, startX, startY, scrollLeft, scrollTop, isOnDragHandle]);
 
-  const handleColorChange = (color, evn) => {
-    if (evn.target.tagName !== "INPUT") {
-      setLineColor(color.hex);
-      setIsColoPickerVisible((p) => !p);
-    }
-    setLineColor(color.hex);
+  const deleteTaskFromLayer = useCallback(
+    (layerId, taskId) => {
+      setTasksLayer((prev) =>
+        prev.map((layer) => {
+          if (layer.id !== layerId) return layer;
+
+          const taskIndex = layer.tasks.findIndex((t) => t.id === taskId);
+          const nextTask =
+            layer.tasks[taskIndex + 1] || layer.tasks[taskIndex - 1];
+
+          if (nextTask) nextTask.hoverNext?.();
+
+          return {
+            ...layer,
+            tasks: layer.tasks.map((task) =>
+              task.id === taskId ? { ...task, animate: `exit` } : task
+            ),
+          };
+        })
+      );
+
+      setTimeout(() => {
+        setCancelDropAnimation(true);
+        setTasksLayer((prev) =>
+          prev.map((layer) => {
+            if (layer.id !== layerId) return layer;
+
+            return {
+              ...layer,
+              tasks: layer.tasks.filter((task) => task.id !== taskId),
+            };
+          })
+        );
+      }, 250);
+
+      setTimeout(() => {
+        setCancelDropAnimation(false);
+      }, 250);
+    },
+    [setTasksLayer]
+  );
+
+  const deleteContextValue = useMemo(
+    () => ({
+      deleteTaskFromLayer,
+      cancelDropAnimation,
+      setCancelDropAnimation,
+    }),
+    [deleteTaskFromLayer, cancelDropAnimation]
+  );
+
+  const addTaskToLayer = (layerId, text) => {
+    if (!text.trim()) return;
+
+    setTasksLayer((prev) =>
+      prev.map((layer) => {
+        if (layer.id !== layerId) return layer;
+        const newTask = {
+          id: `task-${Date.now()}`,
+          text,
+          isChecked: false,
+          animate: `enter`,
+        };
+        return { ...layer, tasks: [...layer.tasks, newTask] };
+      })
+    );
+
+    setTimeout(() => {
+      setTasksLayer((prev) => {
+        const animatedTasks = prev.find((layer) => layer.id === layerId).tasks;
+        const animatedTask = animatedTasks.find(
+          (task) => task.animate === "enter"
+        );
+        animatedTask.animate = "";
+        return [...prev];
+      });
+    }, 250);
   };
 
-  const createTask = () => {
-    addTask(layerId, inputValue);
-    setInputValue("");
+  const handleDragStart = () => {
+    setCancelDropAnimation(true);
   };
+
+  const onDragStart = useCallback(() => {
+    handleDragStart();
+  }, []);
+
+  const onDragEnd = useCallback(
+    (result) => {
+      setCancelDropAnimation(false);
+
+      const { source, destination, type } = result;
+      if (!destination) return;
+
+      if (type === "layer") {
+        const newLayers = [...tasksLayer];
+        const [removed] = newLayers.splice(source.index, 1);
+        newLayers.splice(destination.index, 0, removed);
+
+        setTasksLayer(newLayers);
+        return;
+      }
+
+      if (source.droppableId === destination.droppableId) {
+        const newLayers = [...tasksLayer];
+        const sourceLayer = newLayers.find(
+          (layer) => String(layer.id) === String(source.droppableId)
+        );
+
+        const copied = Array.from(sourceLayer.tasks);
+        const [removed] = copied.splice(source.index, 1);
+
+        copied.splice(destination.index, 0, removed);
+        sourceLayer.tasks = copied;
+        setTasksLayer(newLayers);
+        return;
+      }
+
+      const newLayers = [...tasksLayer];
+
+      const sourceLayer = newLayers.find(
+        (layer) => String(layer.id) === String(source.droppableId)
+      );
+      const destLayer = newLayers.find(
+        (layer) => String(layer.id) === String(destination.droppableId)
+      );
+
+      const sourceTasks = [...sourceLayer.tasks];
+      const destTasks = [...destLayer.tasks];
+
+      const [moved] = sourceTasks.splice(source.index, 1);
+      destTasks.splice(destination.index, 0, moved);
+
+      sourceLayer.tasks = sourceTasks;
+      destLayer.tasks = destTasks;
+
+      setTasksLayer(newLayers);
+    },
+    [tasksLayer, setTasksLayer]
+  );
 
   return (
-    <section className="task__layer-task">
-      <Droppable droppableId={`${layerId}`}>
-        {(provided) => (
-          <>
+    <div className="task__layer" ref={mouseDragScrollRef}>
+      <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
+        <Droppable droppableId="all-layers" type="layer" direction="horizontal">
+          {(provided) => (
             <div
-              className="task__main"
+              className={"layer-droppable"}
               ref={provided.innerRef}
               {...provided.droppableProps}
-              style={{ maxWidth: maxWidth }}
             >
-              <div
-                className="task-line"
-                style={{ background: lineColor }}
-                onClick={() => setIsColoPickerVisible((p) => !p)}
-              >
-                {isColoPickerVisible && (
-                  <div
-                    ref={pickerRef}
-                    className="task-color__picker"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <Block
-                      color={lineColor}
-                      widthBlock={"100%"}
-                      showMainBlock={false}
-                      showSmallBlock={true}
-                      showTriangle={false}
-                      swatchStyle={{ style: { width: 24, height: 24 } }}
-                      onChange={(color, evn) => {
-                        handleColorChange(color, evn);
-                      }}
-                    />
-                  </div>
-                )}
-              </div>
-              <div className="task-header">
-                <h2 className="task-header-title">{title}</h2>
-                <div
-                  className="task-header-color__picker-button"
-                  onClick={() => setIsColoPickerVisible((p) => !p)}
+              {tasksLayer.map((layer, index) => (
+                <Draggable
+                  key={layer.id}
+                  draggableId={`layer-${layer.id}`}
+                  index={index}
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    fill="currentColor"
-                    className="bi bi-three-dots"
-                    viewBox="0 0 16 16"
-                  >
-                    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3" />
-                  </svg>
-                </div>
-              </div>
-              <InputStyle
-                placeholder={"Type the task"}
-                type="name"
-                btnText={"Add"}
-                customButtonFunc={createTask}
-                value={inputValue}
-                inputStyleProps={{
-                  color: "#000",
-                  width: 125,
-                  height: 48,
-                  paddingRight: 110,
-                  marginBottom: 14,
-                }}
-                buttonStyleProps={{
-                  top: 2.5,
-                }}
-                onChange={(e) => {
-                  setInputValue(e.target.value);
-                }}
-              />
-              <div className="task__element">
-                {tasks.map((task, index) => (
-                  <Draggable
-                    key={task.id}
-                    draggableId={`${task.id}`}
-                    index={index}
-                  >
-                    {(provided) => (
+                  {(provided) => {
+                    const style = {
+                      ...provided.draggableProps.style,
+                    };
+
+                    return (
                       <div
+                        className="layer-item"
                         ref={provided.innerRef}
                         {...provided.draggableProps}
-                        {...provided.dragHandleProps}
+                        style={style}
                       >
-                        <TaskItem
-                          task={task}
-                          layerId={layerId}
-                          deleteTask={deleteTask}
-                        />
+                        <TaskLayerDeleteItemContext.Provider
+                          value={deleteContextValue}
+                        >
+                          <TaskLayerItem
+                            layerId={layer.id}
+                            title={layer.title}
+                            tasks={layer.tasks}
+                            addTask={addTaskToLayer}
+                            provided={provided}
+                            key={layer.id}
+                          />
+                          {provided.placeholder}
+                        </TaskLayerDeleteItemContext.Provider>
                       </div>
-                    )}
-                  </Draggable>
-                ))}
-                {provided.placeholder}
-              </div>
+                    );
+                  }}
+                </Draggable>
+              ))}
+              {provided.placeholder}
             </div>
-          </>
-        )}
-      </Droppable>
-    </section>
+          )}
+        </Droppable>
+      </DragDropContext>
+      <div className="layer__add -btn">
+        <button className="add-btn" onClick={handleCreateTaskLayer}>
+        +  Add new column
+        </button>
+      </div>
+    </div>
   );
-};
+});

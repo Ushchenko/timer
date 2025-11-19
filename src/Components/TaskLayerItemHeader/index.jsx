@@ -1,0 +1,139 @@
+import "./TaskLayerItemHeader.css";
+import { InputStyle } from "../InputStyle";
+import Block from "@uiw/react-color-block";
+import { useContext, useEffect, useRef, useState } from "react";
+import { TaskContext } from "../../Context";
+
+export const TaskLayerItemHeader = ({
+  layerId,
+  title,
+  addTask,
+  enableSortAutoAnimate,
+  provided,
+}) => {
+  const pickerRef = useRef(null);
+
+  const [inputValue, setInputValue] = useState("");
+  const [lineColor, setLineColor] = useState(`#fff`);
+  const [isColoPickerVisible, setIsColoPickerVisible] = useState(false);
+
+  const { handleSort } = useContext(TaskContext);
+
+  const sortCheckedTasks = () => {
+    enableSortAutoAnimate(true);
+    handleSort("checked", layerId);
+    setTimeout(() => {
+      enableSortAutoAnimate(false);
+    }, 200);
+  };
+
+  useEffect(() => {
+    enableSortAutoAnimate(false);
+  }, [enableSortAutoAnimate]);
+
+  //color picker close handlers
+  useEffect(() => {
+    const handeCloseEvent = (evn) => {
+      if (pickerRef.current && !pickerRef.current.contains(evn.target))
+        setIsColoPickerVisible(false);
+
+      if (evn.key === "Escape" || evn.key === "Enter") {
+        setIsColoPickerVisible(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handeCloseEvent);
+    document.addEventListener("keydown", handeCloseEvent);
+
+    return () => {
+      document.removeEventListener("mousedown", handeCloseEvent);
+      document.removeEventListener("keydown", handeCloseEvent);
+    };
+  }, [isColoPickerVisible]);
+
+  //color picker change handler
+  const handleColorChange = (color, evn) => {
+    if (evn.target.tagName !== "INPUT") {
+      setLineColor(color.hex);
+      setIsColoPickerVisible((p) => !p);
+    }
+    setLineColor(color.hex);
+  };
+
+  return (
+    <div className="task__layer-task-header">
+      <div
+        className="task-line"
+        style={{ background: lineColor }}
+        onClick={() => setIsColoPickerVisible((p) => !p)}
+      >
+        {isColoPickerVisible && (
+          <div
+            ref={pickerRef}
+            className="task-color__picker"
+            onClick={() => {
+              sortCheckedTasks("checked", layerId);
+            }}
+          >
+            <Block
+              color={lineColor}
+              widthBlock={"100%"}
+              showMainBlock={false}
+              showSmallBlock={true}
+              showTriangle={false}
+              swatchStyle={{ style: { width: 24, height: 24 } }}
+              onChange={(color, evn) => {
+                handleColorChange(color, evn);
+              }}
+            >
+
+            </Block>
+          </div>
+        )}
+      </div>
+      <div className="task-header" {...provided.dragHandleProps}>
+        <h2 className="task-header-title">{title}</h2>
+        <div
+          className="task-header-color__picker-button"
+          onClick={() => setIsColoPickerVisible((p) => !p)}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="currentColor"
+            className="bi bi-three-dots"
+            viewBox="0 0 16 16"
+          >
+            <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3" />
+          </svg>
+        </div>
+      </div>
+      <InputStyle
+        placeholder={"Type the task"}
+        type="name"
+        btnText={"Add"}
+        customButtonFunc={() => {
+          addTask(layerId, inputValue);
+          setInputValue("");
+        }}
+        value={inputValue}
+        inputStyleProps={{
+          color: "#000",
+          width: 125,
+          height: 48,
+          paddingRight: 80,
+          marginBottom: 14,
+        }}
+        buttonStyleProps={{
+          top: 2.5,
+        }}
+        onChange={(e) => {
+          setInputValue(e.target.value);
+        }}
+      >
+        
+      </InputStyle>
+    </div>
+  );
+};
