@@ -3,6 +3,7 @@ import { InputStyle } from "../InputStyle";
 import Block from "@uiw/react-color-block";
 import { useContext, useEffect, useRef, useState } from "react";
 import { TaskContext } from "../../Context";
+import { TaskPopupMenu } from "../TaskPopupMenu";
 
 export const TaskLayerItemHeader = ({
   layerId,
@@ -11,69 +12,87 @@ export const TaskLayerItemHeader = ({
   enableSortAutoAnimate,
   provided,
 }) => {
+  const dropdownRef = useRef(null);
   const pickerRef = useRef(null);
 
   const [inputValue, setInputValue] = useState("");
   const [lineColor, setLineColor] = useState(`#fff`);
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [isColoPickerVisible, setIsColoPickerVisible] = useState(false);
 
   const { handleSort } = useContext(TaskContext);
 
-  const sortCheckedTasks = () => {
+  const sortTasks = (sortType) => {
     enableSortAutoAnimate(true);
-    handleSort("checked", layerId);
+    handleSort(sortType, layerId);
     setTimeout(() => {
       enableSortAutoAnimate(false);
     }, 200);
-  };
+  }
 
   useEffect(() => {
-    enableSortAutoAnimate(false);
-  }, [enableSortAutoAnimate]);
+    const handeClickClose = (evn) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(evn.target))
+        setIsDropdownVisible(false);
 
-  //color picker close handlers
-  useEffect(() => {
-    const handeCloseEvent = (evn) => {
       if (pickerRef.current && !pickerRef.current.contains(evn.target))
         setIsColoPickerVisible(false);
+    };
 
+    const handleKeyClose = (evn) => {
       if (evn.key === "Escape" || evn.key === "Enter") {
+        setIsDropdownVisible(false);
         setIsColoPickerVisible(false);
       }
     };
 
-    document.addEventListener("mousedown", handeCloseEvent);
-    document.addEventListener("keydown", handeCloseEvent);
+    document.addEventListener("mousedown", handeClickClose);
+    document.addEventListener("keydown", handleKeyClose);
 
     return () => {
-      document.removeEventListener("mousedown", handeCloseEvent);
-      document.removeEventListener("keydown", handeCloseEvent);
+      document.removeEventListener("mousedown", handeClickClose);
+      document.removeEventListener("keydown", handleKeyClose);
     };
-  }, [isColoPickerVisible]);
+  }, [isDropdownVisible, isColoPickerVisible]);
 
   //color picker change handler
   const handleColorChange = (color, evn) => {
+    console.log(evn.target.tagName);
     if (evn.target.tagName !== "INPUT") {
       setLineColor(color.hex);
       setIsColoPickerVisible((p) => !p);
     }
     setLineColor(color.hex);
+    // setIsColoPickerVisible((p) => !p);
+  };
+
+  //Callbacks
+  const activateColorPicker = () => {
+    setIsColoPickerVisible((p) => !p);
+  };
+
+  const getLineColor = (color) => {
+    setLineColor(color);
+  };
+
+  const closePopupMenu = () => {
+    setIsDropdownVisible(false);
+  };
+
+  const CallbacksList = {
+    getLineColor: getLineColor,
+    activateColorPicker: activateColorPicker,
+    closePopupMenu: closePopupMenu,
+    sortTasks: sortTasks,
   };
 
   return (
     <div className="task__layer-task-header">
-      <div
-        className="task-line"
-        style={{ background: lineColor }}
-        onClick={() => setIsColoPickerVisible((p) => !p)}
-      >
+      <div className="task-line" style={{ background: lineColor }}>
         {isColoPickerVisible && (
           <div
             ref={pickerRef}
             className="task-color__picker"
-            onClick={() => {
-              sortCheckedTasks("checked", layerId);
-            }}
           >
             <Block
               color={lineColor}
@@ -85,17 +104,19 @@ export const TaskLayerItemHeader = ({
               onChange={(color, evn) => {
                 handleColorChange(color, evn);
               }}
-            >
-
-            </Block>
+            ></Block>
           </div>
         )}
       </div>
-      <div className="task-header" {...provided.dragHandleProps}>
+      <div
+        className="task-header"
+        {...provided.dragHandleProps}
+        ref={dropdownRef}
+      >
         <h2 className="task-header-title">{title}</h2>
         <div
-          className="task-header-color__picker-button"
-          onClick={() => setIsColoPickerVisible((p) => !p)}
+          className={`task-header-popup-button ${isDropdownVisible ? "-active" : ""}`}
+          onClick={() => setIsDropdownVisible((p) => !p)}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -108,6 +129,9 @@ export const TaskLayerItemHeader = ({
             <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3" />
           </svg>
         </div>
+        {isDropdownVisible && (
+          <TaskPopupMenu layerId={layerId} CallbacksList={CallbacksList} />
+        )}
       </div>
       <InputStyle
         placeholder={"Type the task"}
@@ -131,9 +155,7 @@ export const TaskLayerItemHeader = ({
         onChange={(e) => {
           setInputValue(e.target.value);
         }}
-      >
-        
-      </InputStyle>
+      ></InputStyle>
     </div>
   );
 };

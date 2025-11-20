@@ -93,6 +93,7 @@ export const TaskItem = React.memo(function TaskItem({ task, layerId }) {
               className={`element-btn -right -upd ${
                 isEditItemVisible ? "-editable" : ""
               }`}
+              onClick={() => {}}
             >
               <EditIcon fontSize="inherit" />
             </button>

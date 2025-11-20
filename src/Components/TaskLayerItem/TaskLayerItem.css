@@ -1,5 +1,6 @@
 .task__layer-task {
   box-shadow: 0px 0px 3px 1px var(--box-shadow-color);
+  border-radius: 5px;
 }
 
 .task__layer-task-header {
