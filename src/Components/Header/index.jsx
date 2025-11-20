@@ -12,7 +12,7 @@ export const Header = () => {
 
     window.addEventListener("scroll", handleScroll);
 
-    handleScroll()
+    handleScroll();
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -46,7 +46,7 @@ export const Header = () => {
               <nav className="nav">
                 <ul className="nav__list">
                   <li className="menu__item">
-                    <Link tp={""}>
+                    <Link to={"#"} role="menuitem">
                       Dashboards
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -58,10 +58,11 @@ export const Header = () => {
                         <path d="m12 15l-5-5h10l-5 5Z" />
                       </svg>
                     </Link>
-                    {/* TODO: Dropup window for nav */}
+                    {/* //TODO: Dropup window for nav */}
+                    <div className="nav__dropdown" role="menu"></div>
                   </li>
                   <li className="menu__item">
-                    <Link to={""}>
+                    <Link to={"#"} role="menuitem">
                       Tasks
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -72,8 +73,9 @@ export const Header = () => {
                       >
                         <path d="m12 15l-5-5h10l-5 5Z" />
                       </svg>
-                      {/* TODO: Dropup window for nav */}
                     </Link>
+                    {/* //TODO: Dropup window for nav */}
+                    <div className="nav__dropdown" role="menu"></div>
                   </li>
                   <li className="menu__item">
                     <Link to={""}>Docs</Link>

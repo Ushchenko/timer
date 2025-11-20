@@ -27,23 +27,6 @@ export const CountCalendarDays = ({ nowDate, year, month }) => {
     getCalendarIsShown(false)
   }
 
-  // const createListItem = ({ type, day }) => {
-  //   const isCurrentDay =
-  //     day === nowDate.getDate() &&
-  //     year === new Date().getFullYear() &&
-  //     month === new Date().getMonth()
-
-  //   return (
-  //     <li
-  //       key={`${type}-${day}`}
-  //       className={`days--number ${isCurrentDay ? "--cur" : `${type}`}`}
-  //       onClick={(e) => selectDay(day, e)}
-  //     >
-  //       {day}
-  //     </li>
-  //   )
-  // }
-
   const calendarDays = {
     days: [],
     daysAmount: new Date(year, month + 1, 0).getDate(),

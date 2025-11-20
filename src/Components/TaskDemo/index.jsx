@@ -80,28 +80,26 @@ export const TaskDemo = () => {
     setTasksLayer(newLayers);
   };
 
-  const handleSort = (sortType, id) => {
-    switch (sortType) {
-      case "checked":
-        sortCheckedTasks(id);
-        break;
-
-      default:
-        break;
-    }
+  const sortMethods = {
+    checked: (a, b) => Number(b.isChecked) - Number(a.isChecked),
+    title: (a, b) => a.text.localeCompare(b.text),
+    dateCreated: (a, b) => a.id - b.id,
   };
 
-  const sortCheckedTasks = (id) => {
+  const handleSort = (sortType, id) => {
+    const compareFn = sortMethods[sortType];
+    sortTasks(id, compareFn);
+  };
+
+  const sortTasks = (id, compareFn) => {
     setTasksLayer((prevLayers) =>
       prevLayers.map((layer) => {
-        if (layer.id === id) {
-          const sortedTasks = [...layer.tasks].sort((a, b) => {
-            return Number(b.isChecked) - Number(a.isChecked);
-          });
+        if (layer.id !== id) return layer;
 
-          return { ...layer, tasks: sortedTasks };
-        }
-        return layer;
+        return {
+          ...layer,
+          tasks: [...layer.tasks].sort(compareFn),
+        };
       })
     );
   };

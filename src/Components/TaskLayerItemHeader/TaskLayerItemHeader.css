@@ -8,22 +8,36 @@
 }
 
 .task-header {
+  position: relative;
   display: flex;
   margin-top: 5px;
   margin-bottom: 5px;
   justify-content: space-between;
+  align-items: center;
 }
 
 .task-header-title {
   margin: 5px;
 }
 
-.task-header-color__picker-button {
+.task-header-popup-button {
   display: flex;
   align-items: center;
-  margin: 5px;
+  padding: 3px 5px;
+  width: auto;
+  max-height: 15px;
+  border-radius: 5px;
 }
 
-.task-header-color__picker-button:hover {
+.task-header-popup-button.-active {
+  background: #6e6e6ecc;
+}
+
+.task-header-popup-button.-active:hover {
+  background: #6e6e6ecc;
+}
+
+.task-header-popup-button:hover {
   cursor: pointer;
+  background: #9999996e;
 }

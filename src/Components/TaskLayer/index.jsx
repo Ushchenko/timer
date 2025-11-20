@@ -78,6 +78,13 @@ export const TaskLayer = React.memo(function TaskLayer({
     };
   }, [isDragging, startX, startY, scrollLeft, scrollTop, isOnDragHandle]);
 
+  const deleteLayer = useCallback(
+    (layerId) => {
+      setTasksLayer((prev) => prev.filter((layer) => layer.id !== layerId));
+    },
+    [setTasksLayer]
+  );
+
   const deleteTaskFromLayer = useCallback(
     (layerId, taskId) => {
       setTasksLayer((prev) =>
@@ -122,11 +129,12 @@ export const TaskLayer = React.memo(function TaskLayer({
 
   const deleteContextValue = useMemo(
     () => ({
+      deleteLayer,
       deleteTaskFromLayer,
       cancelDropAnimation,
       setCancelDropAnimation,
     }),
-    [deleteTaskFromLayer, cancelDropAnimation]
+    [deleteLayer, deleteTaskFromLayer, cancelDropAnimation]
   );
 
   const addTaskToLayer = (layerId, text) => {
@@ -272,7 +280,7 @@ export const TaskLayer = React.memo(function TaskLayer({
       </DragDropContext>
       <div className="layer__add -btn">
         <button className="add-btn" onClick={handleCreateTaskLayer}>
-        +  Add new column
+          + Add new column
         </button>
       </div>
     </div>
