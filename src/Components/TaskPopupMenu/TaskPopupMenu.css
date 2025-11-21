@@ -1,7 +1,7 @@
 .task-header-popup-menu {
   position: absolute;
-  left: 80%;
-  top: 100%;
+  left: 0%;
+  top: 35px;
   background: #ffffff;
   color: var(--text-main-color);
   z-index: 100;

@@ -6,7 +6,7 @@ export const TaskDemo = () => {
   const [tasksLayer, setTasksLayer] = useState([
     {
       id: 1,
-      title: "Task 1",
+      title: "asdasasdasasdasasdasasdasasdasasdasasdasasd",
       tasks: [
         { id: 1, text: "1", isChecked: false },
         { id: 2, text: "2", isChecked: true },
@@ -49,20 +49,13 @@ export const TaskDemo = () => {
       id: 5,
       title: "Task 5",
       tasks: [
-        { id: 15, text: "7", isChecked: false },
-        { id: 16, text: "8", isChecked: false },
-        { id: 17, text: "9", isChecked: false },
-        { id: 18, text: "10", isChecked: false },
-      ],
-    },
-    {
-      id: 6,
-      title: "Task 6",
-      tasks: [
-        { id: 19, text: "7", isChecked: false },
-        { id: 20, text: "8", isChecked: false },
-        { id: 21, text: "9", isChecked: false },
-        { id: 22, text: "10", isChecked: false },
+        { id: 15, text: "a", isChecked: false },
+        { id: 16, text: "c", isChecked: false },
+        { id: 17, text: "b", isChecked: true },
+        { id: 19, text: "d", isChecked: false },
+        { id: 20, text: "f", isChecked: false },
+        { id: 21, text: "e", isChecked: true },
+        { id: 22, text: "g", isChecked: false },
       ],
     },
   ]);
@@ -78,6 +71,21 @@ export const TaskDemo = () => {
     const newTask = { id: Date.now(), title: task.title, tasks: [] };
     const newLayers = [...tasksLayer, newTask];
     setTasksLayer(newLayers);
+  };
+
+  const handleUpdateTaskText = (layerId, taskId, newText) => {
+    setTasksLayer((prev) =>
+      prev.map((layer) =>
+        layer.id === layerId
+          ? {
+              ...layer,
+              tasks: layer.tasks.map((t) =>
+                t.id === taskId ? { ...t, text: newText } : t
+              ),
+            }
+          : layer
+      )
+    );
   };
 
   const sortMethods = {
@@ -108,6 +116,7 @@ export const TaskDemo = () => {
     handleSetTaskIsChecked: handleSetTaskIsChecked,
     handleSort: handleSort,
     handleCreateTaskLayer: handleCreateTaskLayer,
+    handleUpdateTaskText: handleUpdateTaskText,
   };
 
   return (

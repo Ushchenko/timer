@@ -11,6 +11,88 @@ import { TaskLayerItem } from "../TaskLayerItem";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import { TaskLayerDeleteItemContext } from "../../Context";
 import { TaskContext } from "../../Context";
+import { InputStyle } from "../InputStyle";
+
+const AddTaskLayer = () => {
+  const inputRef = useRef(null);
+
+  const [inputValue, setInputValue] = useState("");
+  const [isCreating, setIsCreating] = useState(false);
+
+  const { handleCreateTaskLayer } = useContext(TaskContext);
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isCreating]);
+
+  useEffect(() => {
+    const handleClick = (evn) => {
+      if (
+        inputRef.current &&
+        !inputRef.current.contains(evn.target) &&
+        !evn.target.closest(".action-btn")
+      )
+        setIsCreating(false);
+    };
+
+    const handleKey = (evn) => {
+      if (evn.key === "Escape") setIsCreating(false);
+    };
+
+    window.addEventListener("mousedown", handleClick);
+    window.addEventListener("keydown", handleKey);
+
+    return () => {
+      window.removeEventListener("mousedown", handleClick);
+      window.removeEventListener("keydown", handleKey);
+    };
+  }, [setIsCreating]);
+
+  return (
+    <div className="layer__add -btn">
+      {isCreating ? (
+        <div>
+          <InputStyle
+            ref={inputRef}
+            placeholder={"New column..."}
+            type="name"
+            btnText={"Create"}
+            customButtonFunc={() => {
+              handleCreateTaskLayer({ title: inputValue });
+              setIsCreating(false);
+              setInputValue("");
+            }}
+            value={inputValue}
+            inputStyleProps={{
+              color: "#000",
+              width: 120,
+              height: 48,
+              paddingRight: 110,
+              marginBottom: 14,
+            }}
+            buttonStyleProps={{
+              top: 2.5,
+            }}
+            onChange={(evn) => {
+              setInputValue(evn.target.value);
+            }}
+          ></InputStyle>
+        </div>
+      ) : (
+        <button
+          className="add-btn"
+          onClick={() => {
+            setIsCreating(true);
+          }}
+        >
+          + Add new column
+        </button>
+      )}
+    </div>
+  );
+};
 
 export const TaskLayer = React.memo(function TaskLayer({
   tasksLayer,
@@ -18,15 +100,11 @@ export const TaskLayer = React.memo(function TaskLayer({
 }) {
   const mouseDragScrollRef = useRef(null);
 
-  const { handleCreateTaskLayer } = useContext(TaskContext);
-
   const [cancelDropAnimation, setCancelDropAnimation] = useState(false);
 
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
-  const [startY, setStartY] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
-  const [scrollTop, setTop] = useState(0);
 
   const isOnDragHandle = useCallback((target) => {
     return (
@@ -36,33 +114,28 @@ export const TaskLayer = React.memo(function TaskLayer({
     );
   }, []);
 
-  //handle mouse drag to scroll
+  //handle mouse drag to scroll-x
   useEffect(() => {
     const element = mouseDragScrollRef.current;
     if (!element) return;
 
-    const handleMouseDown = (e) => {
-      if (isOnDragHandle(e.target)) return;
+    const handleMouseDown = (evn) => {
+      if (isOnDragHandle(evn.target)) return;
       setIsDragging(true);
-      setStartX(e.pageX - element.offsetLeft);
-      setStartY(e.pageY - element.offsetTop);
+      setStartX(evn.pageX - element.offsetLeft);
       setScrollLeft(element.scrollLeft);
-      setTop(element.scrollTop);
       element.style.userSelect = "none";
     };
 
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (evn) => {
       if (!isDragging) return;
-      e.preventDefault();
-      const x = e.pageX - element.offsetLeft;
-      const y = e.pageY - element.offsetTop;
+      evn.preventDefault();
+      const x = evn.pageX - element.offsetLeft;
       const walkX = x - startX;
-      const walkY = y - startY;
       element.scrollLeft = scrollLeft - walkX;
-      element.scrollTop = scrollTop - walkY;
     };
 
-    const handleMouseUp = (e) => {
+    const handleMouseUp = (evn) => {
       setIsDragging(false);
       element.style.userSelect = "";
     };
@@ -76,7 +149,7 @@ export const TaskLayer = React.memo(function TaskLayer({
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseup", handleMouseUp);
     };
-  }, [isDragging, startX, startY, scrollLeft, scrollTop, isOnDragHandle]);
+  }, [isDragging, startX, scrollLeft, isOnDragHandle]);
 
   const deleteLayer = useCallback(
     (layerId) => {
@@ -278,11 +351,7 @@ export const TaskLayer = React.memo(function TaskLayer({
           )}
         </Droppable>
       </DragDropContext>
-      <div className="layer__add -btn">
-        <button className="add-btn" onClick={handleCreateTaskLayer}>
-          + Add new column
-        </button>
-      </div>
+      <AddTaskLayer key={tasksLayer.lenght} />
     </div>
   );
 });
