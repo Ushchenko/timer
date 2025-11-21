@@ -4,6 +4,41 @@ import { TaskLayerDeleteItemContext } from "../../Context";
 import CloseIcon from "@mui/icons-material/Close";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 
+const SortPopup = ({ sortTasks }) => {
+  return (
+    <>
+      <li className="sort-popup">
+        <ul className="sort-popup__list">
+          <li
+            className="sort-popup__item"
+            onClick={() => {
+              sortTasks("checked");
+            }}
+          >
+            <div>By checked</div>
+          </li>
+          <li
+            className="sort-popup__item"
+            onClick={() => {
+              sortTasks("dateCreated");
+            }}
+          >
+            <div>By date created</div>
+          </li>
+          <li
+            className="sort-popup__item"
+            onClick={() => {
+              sortTasks("title");
+            }}
+          >
+            <div>By title</div>
+          </li>
+        </ul>
+      </li>
+    </>
+  );
+};
+
 export const TaskPopupMenu = ({ layerId, CallbacksList }) => {
   const [isSortPopupOpen, setIsSortPopupOpen] = useState(false);
   const [sortPopurAnimate, enableSortPopupAnimate] = useAutoAnimate();
@@ -57,40 +92,5 @@ export const TaskPopupMenu = ({ layerId, CallbacksList }) => {
         </li>
       </ul>
     </div>
-  );
-};
-
-const SortPopup = ({ sortTasks }) => {
-  return (
-    <>
-      <li className="sort-popup">
-        <ul className="sort-popup__list">
-          <li
-            className="sort-popup__item"
-            onClick={() => {
-              sortTasks("checked");
-            }}
-          >
-            <div>By checked</div>
-          </li>
-          <li
-            className="sort-popup__item"
-            onClick={() => {
-              sortTasks("dateCreated");
-            }}
-          >
-            <div>By date created</div>
-          </li>
-          <li
-            className="sort-popup__item"
-            onClick={() => {
-              sortTasks("title");
-            }}
-          >
-            <div>By title</div>
-          </li>
-        </ul>
-      </li>
-    </>
   );
 };

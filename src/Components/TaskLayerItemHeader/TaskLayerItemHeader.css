@@ -12,18 +12,25 @@
   display: flex;
   margin-top: 5px;
   margin-bottom: 5px;
+  text-wrap: wrap;
   justify-content: space-between;
-  align-items: center;
 }
 
 .task-header-title {
   margin: 5px;
+  white-space: normal;
+  word-break: break-word;
+}
+
+.task-header-popup-wrapper {
+  position: relative;
+  display: flex;
 }
 
 .task-header-popup-button {
   display: flex;
   align-items: center;
-  padding: 3px 5px;
+  padding: 8px 5px;
   width: auto;
   max-height: 15px;
   border-radius: 5px;

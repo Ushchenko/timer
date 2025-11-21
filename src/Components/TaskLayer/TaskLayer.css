@@ -4,8 +4,9 @@
   box-sizing: border-box;
   background: linear-gradient(108.3deg, #fff8f9 7.99%, #f4f7fc 98.21%);
   overflow: scroll;
-  min-height: 600px;
+  min-height: 500px;
   max-height: 700px;
+  min-width: 100%;
   user-select: none;
 }
 
@@ -27,7 +28,7 @@
   color: var(--text-main-color);
   padding: 10px;
   font-size: 22px;
-  width: 220px;
+  width: 247px;
   min-width: 200px;
   background: #ffffffb2;
   border-radius: 5px;

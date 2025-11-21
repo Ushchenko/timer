@@ -129,3 +129,80 @@
     transform: translateX(50%) scale(0);
   }
 }
+
+/* ==== editable popup ==== */
+.editable-overlay {
+  position: fixed;
+  inset: 0;
+  background: #00000073;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.editable-dialog {
+  background: #ffffff;
+  padding: 15px;
+  border-radius: 8px;
+  width: 218px;
+  max-width: 450px;
+  box-shadow: 0 4px 25px #00000033;
+}
+
+.editable-dialog.anchored {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 10px 15px;
+  box-shadow: 0 6px 20px #00000040;
+  transform-origin: top left;
+}
+
+/* Disable scroll behind modal */
+body.modal-open {
+  overflow: hidden;
+}
+
+.task-editable-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.editable-item__card {
+  padding: 5px;
+  background: #b9c6d933;
+  border-radius: 5px;
+}
+
+.editable-item__textarea {
+  font-size: 14px;
+  font-family: Arial, Helvetica, sans-serif;
+  width: 95%;
+  background-color: unset;
+  box-shadow: revert;
+  padding: 5px;
+  border: 0;
+  outline: 0px;
+  overflow: auto;
+  overflow-wrap: break-word;
+  resize: none;
+}
+
+.actions__btn {
+  color: var(--text-main-color);
+}
+
+.actions__btn.-save {
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 7px;
+  padding: 7px 10px;
+  background: #47b1db;
+  border-radius: 5px;
+  transition: background-color 0.1s ease-in, box-shadow 0.1s ease-in;
+}
+
+.actions__btn:hover {
+  background: #52c9f8;  
+  box-shadow: var(--box-main-shadow);
+}

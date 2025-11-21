@@ -28,7 +28,7 @@ export const TaskLayerItemHeader = ({
     setTimeout(() => {
       enableSortAutoAnimate(false);
     }, 200);
-  }
+  };
 
   useEffect(() => {
     const handeClickClose = (evn) => {
@@ -63,7 +63,6 @@ export const TaskLayerItemHeader = ({
       setIsColoPickerVisible((p) => !p);
     }
     setLineColor(color.hex);
-    // setIsColoPickerVisible((p) => !p);
   };
 
   //Callbacks
@@ -90,10 +89,7 @@ export const TaskLayerItemHeader = ({
     <div className="task__layer-task-header">
       <div className="task-line" style={{ background: lineColor }}>
         {isColoPickerVisible && (
-          <div
-            ref={pickerRef}
-            className="task-color__picker"
-          >
+          <div ref={pickerRef} className="task-color__picker">
             <Block
               color={lineColor}
               widthBlock={"100%"}
@@ -114,24 +110,28 @@ export const TaskLayerItemHeader = ({
         ref={dropdownRef}
       >
         <h2 className="task-header-title">{title}</h2>
-        <div
-          className={`task-header-popup-button ${isDropdownVisible ? "-active" : ""}`}
-          onClick={() => setIsDropdownVisible((p) => !p)}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            fill="currentColor"
-            className="bi bi-three-dots"
-            viewBox="0 0 16 16"
+        <div className="task-header-popup-wrapper">
+          <div
+            className={`task-header-popup-button ${
+              isDropdownVisible ? "-active" : ""
+            }`}
+            onClick={() => setIsDropdownVisible((p) => !p)}
           >
-            <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3" />
-          </svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="currentColor"
+              className="bi bi-three-dots"
+              viewBox="0 0 16 16"
+            >
+              <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3" />
+            </svg>
+          </div>
+          {isDropdownVisible && (
+            <TaskPopupMenu layerId={layerId} CallbacksList={CallbacksList} />
+          )}
         </div>
-        {isDropdownVisible && (
-          <TaskPopupMenu layerId={layerId} CallbacksList={CallbacksList} />
-        )}
       </div>
       <InputStyle
         placeholder={"Type the task"}
@@ -146,7 +146,7 @@ export const TaskLayerItemHeader = ({
           color: "#000",
           width: 125,
           height: 48,
-          paddingRight: 80,
+          paddingRight: 90,
           marginBottom: 14,
         }}
         buttonStyleProps={{
