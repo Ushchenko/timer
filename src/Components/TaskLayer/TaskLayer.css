@@ -3,7 +3,7 @@
   border-radius: 5px;
   box-sizing: border-box;
   background: linear-gradient(108.3deg, #fff8f9 7.99%, #f4f7fc 98.21%);
-  overflow: scroll;
+  overflow: auto;
   min-height: 500px;
   max-height: 700px;
   min-width: 100%;
@@ -18,27 +18,4 @@
   display: flex;
   height: fit-content;
   margin: 25px;
-}
-
-.layer__add {
-  margin: 25px;
-}
-
-.add-btn {
-  color: var(--text-main-color);
-  padding: 10px;
-  font-size: 22px;
-  width: 247px;
-  min-width: 200px;
-  background: #ffffffb2;
-  border-radius: 5px;
-  box-shadow: var(--box-main-shadow);
-  box-sizing: border-box;
-  border: 3px solid transparent;
-  transition: border-color .15s ease-in-out;
-}
-
-.add-btn:hover {
-  border-color: #6d6d6d;
-  box-shadow: 0px;
 }

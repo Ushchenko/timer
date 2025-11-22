@@ -1,0 +1,22 @@
+.layer__add {
+  margin: 25px;
+}
+
+.add-btn {
+  color: var(--text-main-color);
+  padding: 10px;
+  font-size: 22px;
+  width: 247px;
+  min-width: 200px;
+  background: #ffffffb2;
+  border-radius: 5px;
+  box-shadow: var(--box-main-shadow);
+  box-sizing: border-box;
+  border: 3px solid transparent;
+  transition: border-color 0.15s ease-in-out;
+}
+
+.add-btn:hover {
+  border-color: #6d6d6d;
+  box-shadow: 0px;
+}
